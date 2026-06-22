@@ -16,7 +16,7 @@ minheap_gr::minheap_gr ()
 {
     v=NULL;
     keys=NULL;
-    th_ston_k=NULL;
+    position_in_k=NULL;
     size=0;
 }
 
@@ -30,15 +30,15 @@ vertice minheap_gr::findmin() //Δημιουργούμε μία συνάρτησ
     return v[0];
 }
 
-void minheap_gr::sort(int th) //Η συνάρτηση sort φροντίζει έτσι ώστε κάθε φορά ο γονέας του στοιχείου της θέσης th στον σωρό να έχει μικρότερη τιμή keys από την τιμή keys του παιδιού. Αν αυτό δεν ισχύει τότε τα αντιμεταθέτει και επαναλαμβάνει τον έλεγχο για το στοιχείο που είναι πλέον γονέας. Αλλιώς επιστρέφει.
+void minheap_gr::sort(int position) //Η συνάρτηση sort φροντίζει έτσι ώστε κάθε φορά ο γονέας του στοιχείου της θέσης position στον σωρό να έχει μικρότερη τιμή keys από την τιμή keys του παιδιού. Αν αυτό δεν ισχύει τότε τα αντιμεταθέτει και επαναλαμβάνει τον έλεγχο για το στοιχείο που είναι πλέον γονέας. Αλλιώς επιστρέφει.
 {
     int temp;
     vertice temp2;
-    if(th==0) //Αν εξετάζουμε την ρίζα
+    if(position==0) //Αν εξετάζουμε την ρίζα
     {
         return;
     }
-    else if(keys[th]>keys[(th-1)/2]) //Αν ο γονέας του στοιχείου της θέσης th εχει μικρότερη τιμή keys από το στοιχείο της θέσης th
+    else if(keys[position]>keys[(position-1)/2]) //Αν ο γονέας του στοιχείου της θέσης position εχει μικρότερη τιμή keys από το στοιχείο της θέσης position
     {
         return;
     }
@@ -46,27 +46,27 @@ void minheap_gr::sort(int th) //Η συνάρτηση sort φροντίζει έ
     {
         //Αντιμεταθέτει τις τιμές τους
         
-        temp=keys[th];
-        keys[th]=keys[(th-1)/2];
-        keys[(th-1)/2]=temp;
+        temp=keys[position];
+        keys[position]=keys[(position-1)/2];
+        keys[(position-1)/2]=temp;
         
-        temp2=v[th];
-        v[th]=v[(th-1)/2];
-        v[(th-1)/2]=temp2;
+        temp2=v[position];
+        v[position]=v[(position-1)/2];
+        v[(position-1)/2]=temp2;
 
-        temp=th_ston_k[th];
-        th_ston_k[th]=th_ston_k[(th-1)/2];
-        th_ston_k[(th-1)/2]=temp;
+        temp=position_in_k[position];
+        position_in_k[position]=position_in_k[(position-1)/2];
+        position_in_k[(position-1)/2]=temp;
 
         //Επαναλαμβάνει τον έλεγχο για το στοιχείο που βρίσκεται πλέον στη θέση του προηγούμενου γονέα του
-        sort((th-1)/2);
+        sort((position-1)/2);
     }
 }
 
 
-void minheap_gr::insert(vertice v1,int key,int th) //Δημιουργούμε μία συνάρτηση insert η οποία εισάγει ένα στοιχείο στην κατάλληλη θέση του στον σωρό ελαχίστων. Οι πληροφορίες του στοιχείου αυτού δίνονται ως παράμετροι. 
+void minheap_gr::insert(vertice v1,int key,int position) //Δημιουργούμε μία συνάρτηση insert η οποία εισάγει ένα στοιχείο στην κατάλληλη θέση του στον σωρό ελαχίστων. Οι πληροφορίες του στοιχείου αυτού δίνονται ως παράμετροι. 
 {
-    v1.set_th_ston_koryfes(th);
+    v1.set_position_in_koryfes(position);
 
     
     vertice *temp;
@@ -81,20 +81,20 @@ void minheap_gr::insert(vertice v1,int key,int th) //Δημιουργούμε μ
     {
         temp[i]=v[i];
         temp2[i]=keys[i];
-        temp3[i]=th_ston_k[i];
+        temp3[i]=position_in_k[i];
     }
     
     temp[i]=v1;
     temp2[i]=key;
-    temp3[i]=th;
+    temp3[i]=position;
     
     delete []v;
     delete []keys;
-    delete []th_ston_k;
+    delete []position_in_k;
     
     v=temp;
     keys=temp2;
-    th_ston_k=temp3;
+    position_in_k=temp3;
     
     sort(i);
     size++;
@@ -114,35 +114,35 @@ vertice minheap_gr::deletemin() //Δημιουργούμε μία συνάρτη
     return r;
 }
 
-void minheap_gr::sortdeleted(int goneas) //Η sortdeleted δέχεται ως παράμετρο τη θέση ενός γονέα στον πίνακα v και ελέγχει αν το  παιδί με τη μικρότερη τιμή έχει τιμή μικρότερη από την τιμή του γονέα. Αν ναι, τότε τις αντιμεταθέτει και επαναλαμβάνει τον έλεγχο για τον νέο γονέα του και τα παιδιά του (αν έχει). Αν όχι τότε επιστρέφει.
+void minheap_gr::sortdeleted(int parent_position) //Η sortdeleted δέχεται ως παράμετρο τη θέση ενός γονέα στον πίνακα v και ελέγχει αν το  παιδί με τη μικρότερη τιμή έχει τιμή μικρότερη από την τιμή του γονέα. Αν ναι, τότε τις αντιμεταθέτει και επαναλαμβάνει τον έλεγχο για τον νέο γονέα του και τα παιδιά του (αν έχει). Αν όχι τότε επιστρέφει.
 {
     int temp;
     vertice temp2;
-    //Στη μεταβλητή apaidi αποθηκεύεται η θέση του αριστερού παιδιού και στη μεταβλητή dpaidi αποθηκεύεται η θέση του δεξιού παιδιού
-    int apaidi,dpaidi; 
-    apaidi=2*goneas+1;
-    dpaidi=2*goneas+2;
+    //Στη μεταβλητή left_child_position αποθηκεύεται η θέση του αριστερού παιδιού και στη μεταβλητή right_child_position αποθηκεύεται η θέση του δεξιού παιδιού
+    int left_child_position,right_child_position; 
+    left_child_position=2*parent_position+1;
+    right_child_position=2*parent_position+2;
     
     //Ελέγχουμε αν ο γονέας έχει δεξί παιδί. Αν ναι τότε σίγουρα έχει αριστερό επειδή έχουμε σωρό ελαχίστων
-    if(dpaidi<size)
+    if(right_child_position<size)
     {
-        if(keys[apaidi]<=keys[dpaidi]) //Αν από τα δύο παιδιά αυτό με τη μικρότερη τιμή είναι το αριστερό τότε κάνε το αριστερό παιδί γονέα, κάνε τον γονέα αριστερό παιδί και πήγαινε να ελέγξεις αν ο γονέας που έγινε αριστερό παιδί έχει τιμή μικρότερη από τα νέα παιδιά του (αν έχει)
+        if(keys[left_child_position]<=keys[right_child_position]) //Αν από τα δύο παιδιά αυτό με τη μικρότερη τιμή είναι το αριστερό τότε κάνε το αριστερό παιδί γονέα, κάνε τον γονέα αριστερό παιδί και πήγαινε να ελέγξεις αν ο γονέας που έγινε αριστερό παιδί έχει τιμή μικρότερη από τα νέα παιδιά του (αν έχει)
         {
-            if(keys[apaidi]<keys[goneas]) //Η παραπάνω διαδικασία αν το αριστερό παιδί έχει μικρότερη τιμή ή τα δύο παιδιά έχουν την ίδια τιμή 
+            if(keys[left_child_position]<keys[parent_position]) //Η παραπάνω διαδικασία αν το αριστερό παιδί έχει μικρότερη τιμή ή τα δύο παιδιά έχουν την ίδια τιμή 
             {
-                temp=keys[apaidi];
-                keys[apaidi]=keys[goneas];
-                keys[goneas]=temp;
+                temp=keys[left_child_position];
+                keys[left_child_position]=keys[parent_position];
+                keys[parent_position]=temp;
                 
-                temp2=v[apaidi];
-                v[apaidi]=v[goneas];
-                v[goneas]=temp2;
+                temp2=v[left_child_position];
+                v[left_child_position]=v[parent_position];
+                v[parent_position]=temp2;
 
-                temp=th_ston_k[apaidi];
-                th_ston_k[apaidi]=th_ston_k[goneas];
-                th_ston_k[goneas]=temp;
+                temp=position_in_k[left_child_position];
+                position_in_k[left_child_position]=position_in_k[parent_position];
+                position_in_k[parent_position]=temp;
 
-                sortdeleted(apaidi); //Καλούμε την sortdeleted για την θέση του αριστερού παιδιού που όμως πλέον περιέχει την τιμή του γονέα
+                sortdeleted(left_child_position); //Καλούμε την sortdeleted για την θέση του αριστερού παιδιού που όμως πλέον περιέχει την τιμή του γονέα
             }
             else //Αν το παιδί με την μικρότερη τιμή δεν έχει τιμή μικρότερη από την τιμή του γονέα, δηλαδή αν η τιμή του γονέα είναι μικρότερη από τις τιμές και των δύο παιδιών του, τότε το δένδρο είναι σωρός ελαχίστων οπότε δεν χρειάζονται άλλες αντιμεταθέσεις
             {
@@ -151,21 +151,21 @@ void minheap_gr::sortdeleted(int goneas) //Η sortdeleted δέχεται ως π
         }
         else
         {
-            if(keys[dpaidi]<keys[goneas]) //Η παραπάνω διαδικασία αν το δεξί παιδί έχει μικρότερη τιμή 
+            if(keys[right_child_position]<keys[parent_position]) //Η παραπάνω διαδικασία αν το δεξί παιδί έχει μικρότερη τιμή 
             {
-                temp=keys[dpaidi];
-                keys[dpaidi]=keys[goneas];
-                keys[goneas]=temp;
+                temp=keys[right_child_position];
+                keys[right_child_position]=keys[parent_position];
+                keys[parent_position]=temp;
                 
-                temp2=v[dpaidi];
-                v[dpaidi]=v[goneas];
-                v[goneas]=temp2;
+                temp2=v[right_child_position];
+                v[right_child_position]=v[parent_position];
+                v[parent_position]=temp2;
 
-                temp=th_ston_k[dpaidi];
-                th_ston_k[dpaidi]=th_ston_k[goneas];
-                th_ston_k[goneas]=temp;
+                temp=position_in_k[right_child_position];
+                position_in_k[right_child_position]=position_in_k[parent_position];
+                position_in_k[parent_position]=temp;
                 
-                sortdeleted(dpaidi); //Καλούμε την sortdeleted για την θέση του δεξιού παιδιού που όμως πλέον περιέχει την τιμή του γονέα
+                sortdeleted(right_child_position); //Καλούμε την sortdeleted για την θέση του δεξιού παιδιού που όμως πλέον περιέχει την τιμή του γονέα
             }
             else
             {
@@ -175,23 +175,23 @@ void minheap_gr::sortdeleted(int goneas) //Η sortdeleted δέχεται ως π
 } 
     else //Αλλιώς, δηλαδή αν ο γονέας δεν έχει δεξί παιδί
     {
-        if(apaidi<size) //Αν ο γονέας έχει μόνο αριστερό παίδι
+        if(left_child_position<size) //Αν ο γονέας έχει μόνο αριστερό παίδι
         {
-            if(keys[apaidi]<keys[goneas]) 
+            if(keys[left_child_position]<keys[parent_position]) 
             {
-                temp=keys[apaidi];
-                keys[apaidi]=keys[goneas];
-                keys[goneas]=temp;
+                temp=keys[left_child_position];
+                keys[left_child_position]=keys[parent_position];
+                keys[parent_position]=temp;
                 
-                temp2=v[apaidi];
-                v[apaidi]=v[goneas];
-                v[goneas]=temp2;
+                temp2=v[left_child_position];
+                v[left_child_position]=v[parent_position];
+                v[parent_position]=temp2;
 
-                temp=th_ston_k[apaidi];
-                th_ston_k[apaidi]=th_ston_k[goneas];
-                th_ston_k[goneas]=temp;
+                temp=position_in_k[left_child_position];
+                position_in_k[left_child_position]=position_in_k[parent_position];
+                position_in_k[parent_position]=temp;
                 
-                sortdeleted(apaidi); //Καλούμε την sortdeleted για την θέση του αριστερού παιδιού που όμως πλέον περιέχει την τιμή του κόμβου
+                sortdeleted(left_child_position); //Καλούμε την sortdeleted για την θέση του αριστερού παιδιού που όμως πλέον περιέχει την τιμή του κόμβου
             }
             else //Αν το παιδί με την μικρότερη τιμή δεν έχει τιμή μικρότερη από την τιμή του γονέα, δηλαδή αν η τιμή του γονέα είναι μικρότερη από τις τιμές και των δύο παιδιών του, τότε το δένδρο είναι σωρός ελαχίστων οπότε δεν χρειάζονται άλλες αντιμεταθέσεις
             {
