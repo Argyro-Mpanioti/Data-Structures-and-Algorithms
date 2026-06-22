@@ -10,13 +10,13 @@ private:
     node *pr; //Στον δείκτη σε κόμβο pr αποθηκεύουμε τον γονέα του κόμβου. Αν ο κόμβος είναι η ρίζα τότε ο δείκτης παίρνει την τιμή NULL.
 public:
     node();
-    node(int timh);
+    node(int value);
     
     //Setters και getters για τις private μεταβλητές της
     
     void setvalue(int number);
-    void setlc(node *apaidi);
-    void setrc(node *dpaidi);
+    void setlc(node *left_child);
+    void setrc(node *right_child);
     void setpr(node *parent);
     int getvalue();
     node *getlc();
