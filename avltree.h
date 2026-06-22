@@ -16,13 +16,13 @@ public:
     void build(const char *filename); //Συνάρτηση με παράμετρο το όνομα του αρχείου από το οποίο διαβάζει τις τιμές του δένδρου avl
     void insert(int number); //Συνάρτηση που εισάγει ένα  νούμερο στο δένδρο avl
     int getsize(); //getter του size
-    int foo(node *kombos,int height); //Συνάρτηση με την οποία βρίσκω το υψος ενός δένδρου με ρίζα τον κόμβο kombos
+    int foo(node *node,int height); //Συνάρτηση με την οποία βρίσκω το υψος ενός δένδρου με ρίζα τον κόμβο node
     int findmin();
-    void inorder(node *kombos); //Ενδοδιατεταγμένη προσπέλαση του δένδρου avl
-    void preorder(node *kombos); //Προδιατεταγμένη προσπέλαση του δένδρου avl
-    void right(node *kombos); //Συνάρτηση που υλοποιεί την δεξιά περιστροφή
-    void left(node *kombos); //Συνάρτηση που υλοποιεί την αριστερή περιστροφή
-    void peristrofes(node *kombos);
+    void inorder(node *node); //Ενδοδιατεταγμένη προσπέλαση του δένδρου avl
+    void preorder(node *node); //Προδιατεταγμένη προσπέλαση του δένδρου avl
+    void right(node *node); //Συνάρτηση που υλοποιεί την δεξιά περιστροφή
+    void left(node *node); //Συνάρτηση που υλοποιεί την αριστερή περιστροφή
+    void peristrofes(node *node);
     string search(int n); //Η συνάρτηση search αναζητάει το στοιχείο με τιμή n στο δένδρο AVL και αν το βρει επιστρέφει το string "SUCCESS" αλλιώς επιστρέφει το string "FAILURE"
     void delete_node(int number); //Δημιουργούμε μία συνάρτηση delete η οποία διαγράφει ένα στοιχείο από το δένδρο avl ετσι ώστε αυτό να παραμείνει δένρο avl
 };
