@@ -18,15 +18,15 @@ node::node(int timh)
 }
 
 //Υλοποιώ setter για το lc
-void node::setlc(node* apaidi)
+void node::setlc(node* left_child)
 {
-    lc=apaidi;
+    lc=left_child;
 }
 
 //Υλοποιώ setter για το rc
-void node::setrc(node* dpaidi)
+void node::setrc(node* right_child)
 {
-    rc=dpaidi;
+    rc=right_child;
 }
 
 //Υλοποιώ setter για το pr
