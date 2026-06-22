@@ -7,7 +7,7 @@
 class graph
 {
 private:
-	vertice *koryfes; //Στον δυναμικό πίνακα koryfes αποθηκεύω τις κορυφές του γράφου
+	vertice *vertices; //Στον δυναμικό πίνακα vertices αποθηκεύω τις κορυφές του γράφου
 	int order; //Η μεταβλητή order είναι η τάξη, δηλαδή το πλήθος των κορυφών του γράφου
 	int size; //Η μεταβλητή size είναι το μέγεθος, δηλαδή το πλήθος των ακμών του γράφου
 	 
@@ -28,14 +28,14 @@ public:
 	long int cc2(); //Η συνάρτηση cc2 βοηθάει στην εκτέλεση του Prim για κάθε συνιστώσα του γράφου
 	long int Prim(char color2[],int n); //Συνάρτηση που υλοποιεί τον αλγόριθμο του Prim 
 	int fcc(); //Η συνάρτηση fcc υπολογίζει και επιστρέφει το πλήθος των συνιστωσών του γράφου
-	void DFSVisit(char color[],int u); //Η συνάρτηση DFSVisit προσπελάυνει τα στοιχεία της συνιστώσας που περιέχει την κορυφή που βρίσκεται στην θέση u στον πίνακα koryfes
-	void DFSVisit2(char color2[],int u,char color3[]); //Η συνάρτηση DFSVisit2 προσπελάυνει τα στοιχεία της συνιστώσας που περιέχει την κορυφή που βρίσκεται στην θέση u στον πίνακα koryfes
+	void DFSVisit(char color[],int u); //Η συνάρτηση DFSVisit προσπελάυνει τα στοιχεία της συνιστώσας που περιέχει την κορυφή που βρίσκεται στην θέση u στον πίνακα vertices
+	void DFSVisit2(char color2[],int u,char color3[]); //Η συνάρτηση DFSVisit2 προσπελάυνει τα στοιχεία της συνιστώσας που περιέχει την κορυφή που βρίσκεται στην θέση u στον πίνακα vertices
 
 
 	//getters
 	int getsize();
 	int getorder();
-	vertice getkoryfes(int i);
+	vertice getvertices(int i);
 
 };
 
