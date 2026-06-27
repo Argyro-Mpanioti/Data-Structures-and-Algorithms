@@ -22,7 +22,7 @@ public:
     void preorder(node *node); //Προδιατεταγμένη προσπέλαση του δένδρου avl
     void right(node *node); //Συνάρτηση που υλοποιεί την δεξιά περιστροφή
     void left(node *node); //Συνάρτηση που υλοποιεί την αριστερή περιστροφή
-    void peristrofes(node *node);
+    void rotations(node *node);
     string search(int n); //Η συνάρτηση search αναζητάει το στοιχείο με τιμή n στο δένδρο AVL και αν το βρει επιστρέφει το string "SUCCESS" αλλιώς επιστρέφει το string "FAILURE"
     void delete_node(int number); //Δημιουργούμε μία συνάρτηση delete η οποία διαγράφει ένα στοιχείο από το δένδρο avl ετσι ώστε αυτό να παραμείνει δένρο avl
 };

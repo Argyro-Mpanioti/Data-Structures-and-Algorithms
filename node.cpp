@@ -10,9 +10,9 @@ node::node()
 }
 
 //Υλοποιώ constructor για το node με παράμετρο την τιμή που παίρνει ως value
-node::node(int timh)
+node::node(int in_value)
 {
-    value=timh;
+    value=in_value;
     lc=NULL;
     rc=NULL;
 }

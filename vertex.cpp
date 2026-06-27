@@ -1,37 +1,37 @@
-#include "vertice.h"
+#include "vertex.h"
 #include <iostream>
 using namespace std;
 
 //Υλοποιούμε έναν κατασκευαστή της vertice που να δέχεται ως παράμετρο την τιμή της κορυφής
-vertice::vertice(int value)
+vertex::vertex(int value)
 {
 	this->value=value;
-	pl_edges=0;
+	edges_count=0;
 }
 
 
 //Υλοποιούμε έναν default κατασκευαστή της vertice 
-vertice::vertice()
+vertex::vertex()
 {
 	value=0;
-	pl_edges=0;
+	edges_count=0;
 }
 
 
 //Υλοποιούμε έναν copy constructor για την κορυφή
-vertice::vertice(const vertice &other)
+vertex::vertex(const vertex &other)
 {
 	int i;
 	value=other.value;
-	pl_edges=other.pl_edges;
+	edges_count=other.edges_count;
 
-	th_edges=new int[pl_edges];
-	edges=new vertice[pl_edges];
-	weights=new int[pl_edges];
+	edges_positions=new int[edges_count];
+	edges=new vertex[edges_count];
+	weights=new int[edges_count];
 	
-	for(i=0;i<pl_edges;i++)
+	for(i=0;i<edges_count;i++)
 	{
-		th_edges[i]=other.th_edges[i];
+		edges_positions[i]=other.edges_positions[i];
 		edges[i]=other.edges[i];
 		weights[i]=other.weights[i];
 	}
@@ -40,53 +40,53 @@ vertice::vertice(const vertice &other)
 
 //Υλοποιούμε μία συνάρτηση που συνδέει την κορυφή με την κορυφή που δέχεται ως παράμετρο. Η ακμή έχει το βάρος που δέχεται ως παράμετρο.
 //Υποθέτουμε ότι οι δύο κορυφές δεν είναι ήδη συνδεδεμένες.
-void vertice::insert(vertice v2,int w,int t)
+void vertex::insert(vertex v2,int w,int t)
 {
 	int i;
 
 	//Χρειάζεται να την εισάγουμε στον πίνακα edges
-	//Χρειάζεται επίσης να ενημερώσουμε τον πίνακα weights και τον πίνακα th_edges
-	vertice *temp;
+	//Χρειάζεται επίσης να ενημερώσουμε τον πίνακα weights και τον πίνακα edges_positions
+	vertex *temp;
 	int *temp2;
 	int	*temp3;
 
-	temp=new vertice[pl_edges+1];
-	temp2=new int[pl_edges+1];
-	temp3=new int[pl_edges+1];
+	temp=new vertex[edges_count+1];
+	temp2=new int[edges_count+1];
+	temp3=new int[edges_count+1];
 		
-	for(i=0;i<pl_edges;i++)
+	for(i=0;i<edges_count;i++)
 	{
 		temp[i]=edges[i];
 		temp2[i]=weights[i];
-		temp3[i]=th_edges[i];
+		temp3[i]=edges_positions[i];
 	}
 	
-	temp[pl_edges]=v2;
-	temp2[pl_edges]=w;
-	temp3[pl_edges]=t;
+	temp[edges_count]=v2;
+	temp2[edges_count]=w;
+	temp3[edges_count]=t;
 		
 	edges=temp;
 	weights=temp2;
-	th_edges=temp3;
+	edges_positions=temp3;
 
-	pl_edges++;
+	edges_count++;
 	
 }
 
 
-void vertice::delete_edge(vertice v2)
+void vertex::deleteedge(vertex v2)
 {
 	bool found; //Η μεταβλητή found παίρνει την τιμή true αν η ακμή που θέλουμε να διαγράψουμε υπάρχει στον γράφο και την τιμή false αν δεν υπάρχει
 	int i;
 	found=false;
-	int thesh;
+	int position;
 
 	//Με την παρακάτω for ελέγχουμε όλες τις ακμές της συγκεκριμένης κορυφής για να δουμε αν μία από αυτές είναι η ακμή που τη συνδέει με την κορυφή v2. Αποθηκεύουμε την θέση στην οποία την βρίσκουμε 
-	for(i=0;i<pl_edges;i++)
+	for(i=0;i<edges_count;i++)
 	{
 		if(edges[i].value==v2.value)
 		{
-			thesh=i;
+			position=i;
 			found=true;
 		}
 	}
@@ -100,96 +100,96 @@ void vertice::delete_edge(vertice v2)
 	else
 	{
 		//Διαγράφουμε την ακμή από τον πίνακα edges
-		//Χρειάζεται να ενημερώσουμε τον πίνακα weights και τον πίνακα th_edges
+		//Χρειάζεται να ενημερώσουμε τον πίνακα weights και τον πίνακα edges_positions
 
-		//Μειώνουμε τα μεγέθη των τριών πινάκων και αφαιρούμε το στοιχείο που βρίσκετι στη θέση thesh από τους πίνακες edges, weights και th_edges με την βοήθεια τριών δυναμικών πινάκων temp, temp2, temp3.
+		//Μειώνουμε τα μεγέθη των τριών πινάκων και αφαιρούμε το στοιχείο που βρίσκεται στη θέση position από τους πίνακες edges, weights και edges_positions με την βοήθεια τριών δυναμικών πινάκων temp, temp2, temp3.
 		
-		vertice *temp;
+		vertex *temp;
 		int *temp2;
 		int *temp3;
 
-		temp=new vertice[pl_edges-1];
-		temp2=new int[pl_edges-1];
-		temp3=new int[pl_edges-1];
+		temp=new vertex[edges_count-1];
+		temp2=new int[edges_count-1];
+		temp3=new int[edges_count-1];
 		
-		for(i=0;i<thesh;i++) 
+		for(i=0;i<position;i++)
 		{
 			temp[i]=edges[i]; 
 			temp2[i]=weights[i]; 
-			temp3[i]=th_edges[i];
+			temp3[i]=edges_positions[i];
 		}
-		for(i=thesh+1;i<pl_edges;i++)
+		for(i=position+1;i<edges_count;i++)
 		{
 			temp[i-1]=edges[i];
 			temp2[i-1]=weights[i];
-			temp3[i-1]=th_edges[i];
+			temp3[i-1]=edges_positions[i];
 		}
 		delete []edges;
 		delete[] weights;
-		delete[] th_edges;
+		delete[] edges_positions;
 		
 		edges=temp;
 		weights=temp2;
-		th_edges=temp3;
+		edges_positions=temp3;
 		
-		pl_edges--; //Μειώνουμε το πλήθος των προσπίπτουσων ακμών της κορυφής κατά 1
+		edges_count--; //Μειώνουμε το πλήθος των προσπίπτουσων ακμών της κορυφής κατά 1
 
 	}
 }
 
 //getters
-int vertice::getvalue()
+int vertex::getvalue()
 {
 	return value;
 }
 
-int vertice::get_pl_edges()
+int vertex::get_edges_count()
 {
-	return pl_edges;
+	return edges_count;
 }
 
-vertice vertice::get_edges(int i)
+vertex vertex::get_edges(int i)
 {
 	return edges[i];
 }
 
-int vertice::get_weights(int i)
+int vertex::get_weights(int i)
 {
 	return weights[i];
 }
 
-int vertice::get_th_ston_koryfes()
+int vertex::get_position_in_vertices()
 {
-	return th_ston_koryfes;
+	return position_in_vertices;
 }
 
-int vertice::get_th_edges(int i)
+int vertex::get_edges_positions(int i)
 {
-	return th_edges[i];
+	return edges_positions[i];
 }
 
 //setters
-void vertice::set_pl_edges(int i)
+void vertex::set_edges_count(int i)
 {
-	pl_edges=i;
+	edges_count=i;
 }
 
-void vertice::set_edges(int i,vertice j)
+void vertex::set_edges(int i,vertex j)
 {
 	edges[i]=j;
 }
 
-void vertice::set_weights(int i,int j)
+void vertex::set_weights(int i,int j)
 {
 	weights[i]=j;
 }
 
-void vertice::set_value(int i)
+void vertex::set_value(int i)
 {
 	value=i;
 }
 
-void vertice::set_th_ston_koryfes(int i)
+void vertex::set_position_in_vertices(int i)
 {
-	th_ston_koryfes=i;
+	position_in_vertices=i;
 }

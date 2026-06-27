@@ -1,13 +1,12 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "vertice.h"
-#include "minheap_gr.h"
+#include "vertex.h"
 
 class graph
 {
 private:
-	vertice *vertices; //Στον δυναμικό πίνακα vertices αποθηκεύω τις κορυφές του γράφου
+	vertex *vertices; //Στον δυναμικό πίνακα vertices αποθηκεύω τις κορυφές του γράφου
 	int order; //Η μεταβλητή order είναι η τάξη, δηλαδή το πλήθος των κορυφών του γράφου
 	int size; //Η μεταβλητή size είναι το μέγεθος, δηλαδή το πλήθος των ακμών του γράφου
 	 
@@ -35,7 +34,7 @@ public:
 	//getters
 	int getsize();
 	int getorder();
-	vertice getvertices(int i);
+	vertex getvertices(int i);
 
 };
 
