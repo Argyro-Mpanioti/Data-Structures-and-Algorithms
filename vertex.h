@@ -15,7 +15,7 @@ private:
 public:
 	vertex(); //default κατασκευαστής
 	vertex(int value); //Κατασκευαστής με παράμετρο την τιμή της κορυφής
-	vertex(const vertex& other); //Copy cosntructor
+	vertex(const vertex& other); //Copy constructor
 	void insert(vertex v2,int w,int t); //Η insert εισάγει στον γράφο την ακμή που συνδέει την κορυφή με την κορυφή v2 με βάρος w
 	void delete_edge(vertex v2); //Η delete_edge διαγράφει από τον γράφο την ακμή που συνδέει την κορυφή με την κορυφή v2
 

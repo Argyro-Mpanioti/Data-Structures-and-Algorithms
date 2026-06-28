@@ -44,6 +44,13 @@ void vertex::insert(vertex v2,int w,int t)
 {
 	int i;
 
+	//Ελέγχουμε αν η κορυφή είναι ήδη συνδεδεμένη με την ακμή
+	for (i=0;i<edges_count;i++) {
+		if(edges[i]==v2) {
+			return;
+		}
+	}
+
 	//Χρειάζεται να την εισάγουμε στον πίνακα edges
 	//Χρειάζεται επίσης να ενημερώσουμε τον πίνακα weights και τον πίνακα edges_positions
 	vertex *temp;
@@ -74,7 +81,7 @@ void vertex::insert(vertex v2,int w,int t)
 }
 
 
-void vertex::deleteedge(vertex v2)
+void vertex::delete_edge(vertex v2)
 {
 	bool found; //Η μεταβλητή found παίρνει την τιμή true αν η ακμή που θέλουμε να διαγράψουμε υπάρχει στον γράφο και την τιμή false αν δεν υπάρχει
 	int i;

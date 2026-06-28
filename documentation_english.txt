@@ -11,50 +11,47 @@ The content of line is saved in the character array "com". This is done to allow
 
 In main, when the phrase BUILD MINHEAP is detected in a line of "commands.txt" then the name of the file that contains the heap values is saved in the character array "filename". The name of the file is the string that follows "BUILD MINHEAP" in commands.txt. After this, a minheap constructor is called. The parameter of the constructor is the filename. The constructor reads the values of the file called "filename" and inserts each value in the minheap.
 
-In main, when the phrase BUILD MINHEAP is detected in a line of "commands.txt" then the name of the file that contains the heap values is saved in the character array "filename". The name of the file is the string that follows "BUILD MINHEAP" in commands.txt. After this, a minheap constructor is called. The parameter of the constructor is the filename. The constructor reads the values of the file called "filename" and inserts each value in the minheap.
-
 The minheap class has 2 attributes:
 > "size": the size of the minheap
-> "value": dynamic array that contains the values of the heap
+> "value": dynamic array that contains the values of the nodes in the heap
 
 Minheap has the default constructor, that initializes the "size" attribute as 0 and assigns NULL to the array "value".
 
-The method "build" δέχεται ως παράμετρο το όνομα του αρχείου από το οποίο διαβάζονται οι τιμές που πρέπει να εισαχθούν στον σωρό ελαχίστων. Κάθε τιμή που διαβάζεται από αυτό το αρχείο αποθηκεύεται σε ένα string, μετατρέπεται σε ακέραιο με τη συνάρτηση stoi και εισάγεται στον σωρό με κλήση της insert. Σε περίπτωση που προκύψει κάποιο σφάλμα με το άνοιγμα του αρχείου  εμφανίζεται το μήνυμα "Couldn't open file.".
+The method "build" gets as a parameter the name of the file from which it reads the values that should be added in the minheap. Each value that is read from the file is saved in a string and then turned into an integer with the function stoi. After this, it is inserted in the heap with the call of the method "insert". If we encounter a problem while opening the file, the message "Couldn't open file." appears.
 
-Υπάρχουν τέτοιοι κατασκευαστές και τέτοιες συναρτήσεις build και για τις 5 δομές που υλοποιούνται σε αυτή την εργασία.
+This constructor and this "build" method exist for all 5 structures of this project.
 
 
 -INSERT MINHEAP number
 
-In main, when the phrase INSERT MINHEAP is detected in a line of "commands.txt" then the string that follows it is turned into an integer and "insert" is called for minheap που είναι ο σωρός ελαχίστων μας με παράμετρο τον ακέραιο.
+In main, when the phrase INSERT MINHEAP is detected in a line of "commands.txt" then the string that follows it is turned into an integer. After this, "insert" is called for minheap. We pass the integer as a paameter to "insert".
 
 
 In main:
-Μετατροπή συμβολοσειράς σε ακέραιο:
+We turn the string into an integer and we save it in the variable "number".
+In the variable "number" we save the first character that follows "INSERT MINHEAP " after casting it from ASCII to an integer. After this, we turn it into the integer from of the initial number written on the file by subtracting 48.
+Each time we encounter another character that is a number we multiply "number" by 10 and add the new integer after turning it into an integer.
+We check whether the value of the node is non-negative. If it is negative then we do nothing. If it is non-negative, we call the method "insert" using "number" as a parameter.
 
-Είναι δεδομένο ότι ο αριθμός είναι μη αρνητικός.
-Έχουμε μία ακέραια μεταβλητή number στην οποία αποθηκεύουμε το νούμερο που προκύπτει. Στη μεταβλητή number αποθηκεύουμε τον πρώτο χαρακτήρα που ακολουθεί το "INSERT MINHEAP " αφού πρώτα τον μετατρέψουμε σε ASCII με χρήση του casting σε ακέραιο και στη συνέχεια τον μετατρέπουμε σε ακέραια μορφή του αρχικού χαρακτήρα αφαιρώντας 48. Κάθε φορά που συναντάμε και άλλον χαρακτήρα που είναι νούμερο μετακινούμε όλους τους υπόλοιπους αριθμούς μία θέση προς τα αριστερά (πολλαπλασιάζοντας με το 10) και τοποθετούμε τον νέο αριθμό που συναντάμε στο τέλος (προσθέτοντας τον αφού τον μετατρέψει σε ακέραια μορφή). Έπειτα γίνεται η κλήση της insert με παράμετρο το number. 
-
-Στην συνάρτηση insert της κλάσης minheap:
-Εισαγωγή ακέραιου σε σωρό:
-
-Δημιουργούμε έναν πίνακα ακεραίων ο οποίος έχει μέγεθος ίσο με το μέγεθος του value αυξημένο κατά 1. Σε αυτόν αντιγράφουμε τα στοιχεία του value και προσθέτουμε το νέο στοιχείο. Έπειτα αυξάνουμε το μέγεθος του value και αντιγράφουμε τα στοιχεία του νέου πίνακα σε αυτόν. Επίσης αυξάνουμε το μέγεθος (size) του σωρού. Το νέο στοιχείο προστίθεται στο τέλος του πίνακα. Όμως πρέπει να γίνουν οι κατάλληλες ενέργειες έτσι ώστε ο σωρός να εξακολουθήσει να είναι σωρός ελαχίστων. Από τη θεωρία γνωρίζουμε ότι όταν αποθηκεύουμε σωρό σε πίνακα, ένα στοιχείο σε θέση n έχει γονέα σε θέση (n-1)/2. Άρα όσο το στοιχείο που εισάγουμε έχει τιμή μικρότερη από την τιμή του γονέα του, αντιμεταθέτουμε τα 2 αυτά στοιχεία και συνεχίζουμε τον έλεγχο. Μόλις το στοιχείο αποκτήσει τιμή μεγαλύτερη από την τιμή του γονέα του η διαδικασία έχει ολοκληρωθεί.
+In the method "insert" of the class minheap:
+We insert the integer in the heap:
+We create an array of integers that has the same size as "value" increased by 1. In the array we copy the elements of "value" and add the new element. After this we increase the size of value and copy back the elements of the new array. We also increase the size of the heap. The new element is added in the end of the array. Όμως πρέπει να γίνουν οι κατάλληλες ενέργειες έτσι ώστε ο σωρός να εξακολουθήσει να είναι σωρός ελαχίστων. Από τη θεωρία γνωρίζουμε ότι όταν αποθηκεύουμε σωρό σε πίνακα, ένα στοιχείο σε θέση n έχει γονέα σε θέση (n-1)/2. Άρα όσο το στοιχείο που εισάγουμε έχει τιμή μικρότερη από την τιμή του γονέα του, αντιμεταθέτουμε τα 2 αυτά στοιχεία και συνεχίζουμε τον έλεγχο. Μόλις το στοιχείο αποκτήσει τιμή μεγαλύτερη από την τιμή του γονέα του η διαδικασία έχει ολοκληρωθεί.
 
 
 -GETSIZE MINHEAP
 
-Στη main εγγράφεται στο αρχείο output.txt το μέγεθος του σωρού ελαχίστων και στη συνέχεια γίνεται αλλαγή γραμμής.
-Το μέγεθος του σωρού (size) είναι private μεταβλητή οπότε για την χρήση του στην main γίνεται κλήση της getter getsize, η οποία επιστρέφει το size.
+In main the size of the heap is written in the file "output.txt" and after that the line is changed.
+The size of the heap is a private attribute so in order to use it in main we call the getter getsize.
 
 -FINDMIN MINHEAP
 
-Στη main εγγράφεται το ελάχιστο στοιχείο του σωρού στο output.txt και στη συνέχεια γίνεται αλλγή γραμμής.
-Το ελάχιστο στοιχείο του σωρού υπολογίζεται με την συνάρτηση findmin. Η findmin επιστρέφει το περιεχόμενο της θέσης 0 του πίνακα value, δηλαδή την τιμή της ρίζας του σωρού ελαχίστων γιατί αυτή είναι η τιμή του ελάχιστου στοιχείου του σωρού ελαχίστων.
+In main the minimum element of the heap is written in the file "output.txt" and after hat the line is changed.
+The minimum element of the heap is computed with the method findmin. findmin returns the content of the first element of the array "value". This element is the root of the minheap because this is the root has the minimum value in minheap.
 
 
 -DELETEMIN MINHEAP
 
-Καλείται η συνάρτηση deletemin για το αντικείμενο minheap. Αυτή διαγράφει το ελάχιστο στοιχείο του σωρού ελαχίστων, το οποίο είναι το πρώτο στοιχείο του πίνακα value.
+The method deletemin is called for the object minheap. This method deletes the element with the minimum value of minheap, which is the first element of th array "value".
 Η deletemin εκχωρεί στο πρώτο στοιχείο του σωρού το τελευταίο, μειώνει το μέγεθός του κατά 1 και καλεί την συνάρτηση sortdeleted η οποία κάνει τις κατάλληλες αντιμεταθέσεις έτσι ώστε ο σωρός ελαχίστων να εξακολουθήσει να είναι σωρός ελαχίστων. Η sortdeleted δέχεται ως παράμετρο τη θέση ενός γονέα στον πίνακα value και ελέγχει αν το παιδί με τη μικρότερη τιμή έχει τιμή μικρότερη από την τιμή του γονέα. Αν ναι τότε αντιμεταθέτει τις τιμές και επαναλαμβάνει τον έλεγχο για τον ίδιο γονέα και τα νέα παιδιά του (αν έχει). Ο τρόπος με τον οποίο το υλοποιείται η sortdeleted εξηγείται αναλυτικότερα στα σχόλια της συνάρτησης.
 
 
@@ -65,7 +62,7 @@ Note: Maxheap is very similar to minheap. For this reason, I will only explain t
 
 -BUILD MΑΧHEAP filename
 
-In main we follow the same process that we followed wehn we encountered BUILD MINHEAP. The only things that change are: 1)το όνομα της μεταβλητής στην οποία αποθηκεύουμε το όνομα του αρχείου από το οποίο παίρνουμε τις τιμές τις οποίες θα εισάγουμε στον σωρό (έτσι ώστε να μπορούμε να δίνουμε τιμές στην maxheap και στην minheap από διαφορετικά αρχεία), 2)ο τύπος και το όνομα του αντικειμένου: πλέον έχουμε αντικείμενο τύπου maxheap το οποίο ονομάζουμε maxheap
+In main we follow the same process that we followed when we encountered BUILD MINHEAP. The only things that change are: 1)το όνομα της μεταβλητής στην οποία αποθηκεύουμε το όνομα του αρχείου από το οποίο παίρνουμε τις τιμές τις οποίες θα εισάγουμε στον σωρό (έτσι ώστε να μπορούμε να δίνουμε τιμές στην maxheap και στην minheap από διαφορετικά αρχεία), 2)ο τύπος και το όνομα του αντικειμένου: πλέον έχουμε αντικείμενο τύπου maxheap το οποίο ονομάζουμε maxheap
 
 The maxheap constructor is the same as the minheap constructor.
 The "build" method of maxheap is the same as the "build" method of minheap.
@@ -73,19 +70,20 @@ The "build" method of maxheap is the same as the "build" method of minheap.
 
 -INSERT MAXHEAP number
 
-Στην main ακολουθείται η ίδια διαδικασία με την INSERT MINHEAP number. Η insert της maxheap είναι σχεδόν ίδια με την insert της minheap. Η μόνη τους διαφορά είναι ότι όσο το στοιχείο που εισάγουμε έχει τιμή μεγαλύτερη από την τιμή του γονέα του, αντιμεταθέτουμε τα 2 αυτά στοιχεία και συνεχίζουμε τον έλεγχο. Μόλις το στοιχείο αποκτήσει τιμή μικρότερη από την τιμή του γονέα του η διαδικασία έχει ολοκληρωθεί.
+We follow the same process that we explained in "INSERT MINHEAP number". The method "insert" of maxheap is almost the same as the method "insert" of minheap. Theor only difference is that while the element that we are inserting has a value bigger than its parent's value, we switch those 2 elements and repeat the process. When the value of the element becomes smaller than the value of its parent the process is done.
 
 -GETSIZE MAXHEAP
 
-Ίδια με την GETSIZE MAXHEAP.
+Same as GETSIZE MAXHEAP.
 
 -FINDMAX MAXHEAP
 
-Ίδια με την FINDMIN MINHEAP. Το περιεχόμενο της θέσης 0 του πίνακα value του σωρού μεγίστων είναι η τιμή της ρίζας του σωρού μεγίστων άρα είναι η τιμή του μέγιστου στοιχείου του σωρού μεγίστων.
+Same as FINDMIN MINHEAP. The content of position 0 of the "value" array of the maxheap is the value of the root of the maxheap. Therefore, it is the maximum value of the heap.
 
 -DELETEMΑΧ MΑΧHEAP
 
-Η deletemax της maxheap είναι ίδια με την deletemin της minheap. Η sortdeleted της maxheap ελέγχει αν το παιδί με τη μεγαλύτερη τιμή έχει τιμή μεγαλύτερη από την τιμή του γονέα και όχι μικρότερη όπως η sortdeleted της minheap. Αλλά κατά τ' άλλα ακολουθεί τα ίδια βήματα με την sortdeleted της minheap.
+deletemax of maxheap is the same as deletemin of minheap.
+sortdeleted of maxheap checks if the child with the biggest value has a value bigger than the parent's value (not smaller like sortdeleted of minheap). But other than this, it follows the same steps as sortdeleted of minheap.
 
 
 •node
@@ -109,7 +107,6 @@ The class node has the methods:
 Note: For the avl tree I have also implemented the methods "preorder" and "inorder" that show the values of the tree with preorder and inorder traversal. These functions are not called in main but if you want to you can check the correctness of the AVL tree with them.
 
 
-
 -BUILD AVLTREE
 
 For the AVL tree in main we follow the same steps that we have followed for the BUILD of previous structures.
@@ -118,13 +115,13 @@ The class of the AVL tree has 2 attributes:
 > root: pointer to an object with the type node. It points to the root of the tree.
 > size: integer that contains the size of the AVL tree.
 
-The class "avltree" has the default constructor that initiallizes the size of the tree to 0 and makes root point to NULL και την συνάρτηση build που λειτουγεί όπως λειτουργούν οι αντίστοιχες συναρτήσεις των κλάσεων minheap και maxheap.
+The class "avltree" has the default constructor that initializes the size of the tree to 0 and makes root point to NULL και την συνάρτηση build που λειτουγεί όπως λειτουργούν οι αντίστοιχες συναρτήσεις των κλάσεων minheap και maxheap.
 
 
 
 -INSERT AVLTREE number
 
-Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση INSERT AVLTREE τότε η συμβολοσειρά που ακολουθεί μετατρέπεται σε ακέραιο όπως έγινε και στις INSERT των προηγούμενων δομών και καλείται η insert για το αντικείμενο avl με παράμετρο τον ακέραιο.
+In main, when the phrase INSERT AVLTREE is detected in a line of "commands.txt" then the string that follows it is turned into an integer (the same way it happened with the INSERT of previous structures). After, we call "insert" for the object avltree with the integer as a parameter.
 
 In the "insert" method of avltree:
 
@@ -141,11 +138,17 @@ For the execution of these rotations the method rotations is called. The paramet
 
 The method rotations gets as a parameter a pointer to a node of the tree. The method has a the boolean variable "balanced". balanced is true when we do the rotation. Η συνάρτηση ελέγχει αν χρειάζεται κάποια περιστροφή το δένδρο που ξεκινάει από τον κόμβο που δέχεται ή από κάποιον πρόγονό του και εκτελεί αυτήν την περιστροφή.
 
-Συγκεκριμένα, αν ο κόμβος είναι κενός ή έχει εκτελεστεί η απαραίτητη περιστροφή για να γίνει το δένδρο avl τότε επιστρέφει. Αλλιώς, υπολογίζει το ύψος των δύο υποδένδρων του με κλήση της συνάρτησης foo (η λειτουργία της foo εξηγείται στη συνέχεια).
+Specifically, if the node is empty or the necessary rotation has been executed for the tree to be an avltree then it returns. Otherwise, it calculates the height of the 2 subtrees using the function foo (the content of the function foo is explained later on).
 
-Αν το ύψος του δεξιού υποδένδρου του κόμβου είναι μεγαλύτερο από το ύψος του αριστερού υποδένδρου του κόμβου και η διαφορά τους είναι μεγαλύτερη ή ίση με 2 τότε χρειάζεται να γίνει απλή αριστερή περιστροφή ή διπλή περιστροφή RL. Αν το ύψος του δεξιού υποδένδρου του δεξιού παιδιού του κόμβου είναι μεγαλύτερο από το ύψος του αριστερού υποδένδρου του δεξιού παιδιού του κόμβου τότε γίνεται απλή αριστερή περιστροφή. Αλλιώς γίνεται διπλή περιστροφή RL. Αν γίνει κάποια από τις δύο περιστροφές εκχωρούμε στην balanced την τιμή true.
+If the height of the node's right subtree is bigger than the height of the node's left subtree and the difference is greater or equal to 2 then we do a simple left rotation or a double rotation RL.
+If the height of the node's right child's right subtree is bigger than the height of the node's right child's left subtree then a simple left rotation is executed.
+Otherwise, we execute a double RL rotation.
+If one of the 2 rotations is executed then we assign the value true to "balanced".
 
-Αν το ύψος του αριστερού υποδένδρου του κόμβου είναι μεγαλύτερο από το ύψος του δεξιού υποδένδρου του κόμβου και η διαφορά τους είναι μεγαλύτερη ή ίση με 2 τότε χρειάζεται να γίνει απλή δεξιά περιστροφή ή διπλή περιστροφή LR. Αν το ύψος του αριστερού υποδένδρου του αριστερού παιδιού του κόμβου είναι μεγαλύτερο από το ύψος του δεξιού υποδένδρου του παιδού του κόμβου τότε γίνεται απλή δεξιά περιστροφή. Αλλιώς γίνεται διπλή περιστροφή LR. Αν γίνει κάποια από τις δύο περιστροφές εκχωρούμε στην balanced την τιμή true.
+Αν το ύψος του αριστερού υποδένδρου του κόμβου είναι μεγαλύτερο από το ύψος του δεξιού υποδένδρου του κόμβου και η διαφορά τους είναι μεγαλύτερη ή ίση με 2 τότε χρειάζεται να γίνει απλή δεξιά περιστροφή ή διπλή περιστροφή LR.
+Αν το ύψος του αριστερού υποδένδρου του αριστερού παιδιού του κόμβου είναι μεγαλύτερο από το ύψος του δεξιού υποδένδρου του παιδού του κόμβου τότε γίνεται απλή δεξιά περιστροφή.
+Otherwise, we execute a double LR rotation.
+If one of the 2 rotations is executed then we assign the value true to "balanced".
 
 Συναρτήσεις που χρησιμοποιούνται στην παραπάνω διαδικασία και εξήγηση της λειτουργίας τους:
 1)foo
@@ -159,28 +162,30 @@ The method rotations gets as a parameter a pointer to a node of the tree. The me
 Αλλιώς καλείται η foo 2 φορές. Την πρώτη φροά καλείται με 1η παράμετρο τον δείκτη στο δεξί παιδί του και 2η παράμετρο το height αυξημένο κατά 1. Την δεύτερη φροά καλείται με 1η παράμετρο τον δείκτη στο αριστερό παιδί του και 2η παράμετρο το αυξημένο height αυξημένο κατά 1. Οι τιμές που επιστρέφουν αυτές οι δύο κλήσεις της συνάρτησης συγκρίνονται και επιστρέφεται η μεγαλύτερη.
 
 2)left
-Η left είναι συνάρτηση που δέχεται ως παράμετρο τον δείκτη στον κόμβο kombos και υλοποιεί την απλή αριστερή περιστροφή του υποδένδρου με γονέα τον kombos.
+left is a function that gets as a parameter the pointer to the node "node" and executes the simple left rotation of the subtree that has "node" as a root.
 
 3)right
-Η right είναι συνάρτηση που δέχεται ως παράμετρο τον δείκτη στον κόμβο kombos και υλοποιεί την απλή δεξιά περιστροφή του υποδένδρου με γονέα τον kombos.
+right is a function that gets as a parameter the pointer to the node "node" and executes the simple right rotation of the subtree that has "node" as a root.
 
-Για να γίνει η διπλή περιστροφή RL ενός υποδένδρου πρώτα καλείται η right με παράμετρο τον δείκτη στο δεξί παιδί της ρίζας του υποδένδρου και μετά καλείται η left με παράμετρο τον δείκτη στη ρίζα του υποδένδρου.
-
-Για να γίνει η διπλή περιστροφή LR ενός υποδένδρου πρώτα καλείται η left με παράμετρο τον δείκτη στο αριστερό παιδί της ρίζας του υποδένδρου και μετά καλείται η right με παράμετρο τον δείκτη στη ρίζα του υποδένδρου.
+In order to execute the double RL rotation of a subtree, we first call "right". The parameter we pass to "right" is the pointer to the right child of the subtree's root. After this, "left" is called. The parameter we pass to "left" is the pointer to the subtree's root.
+In order to execute the double LR rotation of a subtree, we first call "left". The parameter we pass to "left" is the pointer to the left child of the subtree's root. After this, "right" is called. The parameter we pass to "right" is the pointer to the subtree's root.
 
 
 
 -GETSIZE AVLTREE
 
-Ίδια με τις GETSIZE των προηγούμενων δομών.
+Same as the GETSIZE of previous structures.
 
 
 
 -FINDMIN AVLTREE
 
-Στη main, όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση FINDMIN AVLTREE τότε εκτός από τον χρόνο εκτέλεσης, εγγράφουμε και το ελάχιστο στοιχείο του δένδρου AVL στο output.txt και στη συνέχεια αλλάζουμε γραμμή. Βρίσκουμε το ελάχιστο στοιχείο του δένδρου AVL με τη συνάρτηση findmin της κλάσης avl.
+In main, όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση FINDMIN AVLTREE τότε εκτός από τον χρόνο εκτέλεσης, εγγράφουμε και το ελάχιστο στοιχείο του δένδρου AVL στο output.txt και στη συνέχεια αλλάζουμε γραμμή. Βρίσκουμε το ελάχιστο στοιχείο του δένδρου AVL με τη συνάρτηση findmin της κλάσης avl.
 
-Το δένδρο avl είναι δυαδικό δένδρο αναζήτησης άρα για να βρούμε το μικρότερο στοιχείο του αρκεί να πάρουμε το πιο αριστερό στοιχείο στο δένδρο. Δηλαδή αρχίζουμε από την ρίζα και ελέγχουμε αν έχει αριστερό παιδί. Αν ναι, παίρνουμε το αριστερό παιδί της και επαναλαμβάνουμε την διαδικασία. Αν όχι, τότε η τιμή του τελευταίου κόμβου που ελέγξαμε είναι η ελάχιστη τιμή του δένδρου.
+The AVL tree is a binary search tree so in order to find its smallest element we just need to find the most left element of the tree. 
+Therefore, we start at the root and we check if it has a left child. 
+If it does, we repeat the process for the left child. 
+If it doesn't, then the value of the last node that we checked is the tree's minimum element.
 
 
 
@@ -256,18 +261,18 @@ The class vertex has 6 attributes:
 > Τον δυναμικό πίνακα ακεραίων edges_positions στον οποίο αποθηκεύονται οι θέσεις όλων των κορυφών με τις οποίες συνδέεται η συγκεριμένη κορυφή στον πίνακα vertices. Ο πίνακας th_edges είναι παράλληλος με τους πίνακες edges και weights.
 > Την ακέραια μεταβλητή position_in_vertices στην οποία αποθηκεύεται η θέση της κορυφής στον πίνακα vertices.
 
-The methods of class "vertice" are:
-> A default constructor, that initializes the value of the vertex as 0 and the count of προσπίπτουσων edges of the vertex as 0.
-> Έναν κατασκευαστή με παράμετρο μία ακέραια μεταβλητή. Ο κατασκευαστής την κάνει τιμή της κορυφής και αρχικοποίει το πλήθος των προσπίπτουσων ακμών της κορυφής με 0.
-> Έναν copy constructor.
-> Τη συνάρτηση insert που συνδέει την κορυφή για την οποία εκτελείται με την κορυφή που δέχεται ως παράμετρο. Η ακμή που τις συνδέει έχει ως βάρος την τιμή που δέχεται η συνάρτηση ως 2η παράμετρο. Υποθέτουμε ότι οι δύο κορυφές δεν είναι ήδη συνδεδεμένες.
-> Τη συνάρτηση delete_edge που δέχεται ως παράμετρο μία κορυφή και διαγράφει από τον γράφο την ακμή που τη συνδέει με την κορυφή για την οποία εκτελείται η συνάρτηση.
-> setters και getters.
+The methods of class "vertex" are:
+> A default constructor, that initializes the value of the vertex as 0 and its degree as 0.
+> A constructor that takes an integer as a parameter. The constructor makes the integer the value of the vertex and initializes its degree as 0.
+> A copy constructor.
+> The method "insert" that connects the vertex with a vertex that it gets as a parameter. The 2nd parameter is the weight of the edge that connects them. We make the assumption that the two edges are not already connected.
+> The method delete_edge που δέχεται ως παράμετρο μία κορυφή και διαγράφει από τον γράφο την ακμή που τη συνδέει με την κορυφή για την οποία εκτελείται η συνάρτηση.
+> setters and getters.
 > Υπερφόρτωση του τελεστή = έτσι ώστε αυτός να λειτουργεί και για κορυφές.
 
 Αναλυτικότερα στην insert ενημερώνουμε τους πίνακες edges,weights,th_edges αυξάνοντας το μέγεθός τους κατά 1 και προσθέτοντας την νέα γειτονική κορυφή, το βάρος της νέας ακμής και την θέση της στον πίνακα edges σε αυτούς αντίστοιχα. Επίσης, αυξάνουμε την ακέραια μεταβλητή pl_edges.
 
-Η delete_edge αρχικά ελέγχει αν η ακμή που συνδέει την κορυφή με την κορυφή που δέχεται ως 1η παράμετρο υπάρχει στον γράφο και αν βρει ότι η ακμή υπάρχει αποθηκεύει την θέση που έχει στους πίνακες edges/weights/th_edges (είναι η ίδια γιατί οι πίνακες είναι παράλληλοι) στην μεταβλητή position. Αν η ακμή δεν υπάρχει εκτελείται η return, αλλιώς ενημερώνουμε τους πίνακες edges,weights,th_edges αφαιρώντας από αυτούς το στοιχείο στην θέση thesh και μειώνοντας το μέγεθός τους κατά 1.
+Η delete_edge αρχικά ελέγχει αν η ακμή που συνδέει την κορυφή με την κορυφή που δέχεται ως 1η παράμετρο υπάρχει στον γράφο και αν βρει ότι η ακμή υπάρχει αποθηκεύει την θέση που έχει στους πίνακες edges/weights/th_edges (είναι η ίδια γιατί οι πίνακες είναι παράλληλοι) στην μεταβλητή position. Αν η ακμή δεν υπάρχει εκτελείται η return, αλλιώς ενημερώνουμε τους πίνακες edges,weights,th_edges αφαιρώντας από αυτούς το στοιχείο στην θέση "position" και μειώνοντας το μέγεθός τους κατά 1.
 
 
 •graph
@@ -292,7 +297,7 @@ It also has the method "build" that gets the name of a file as a parameter and r
 
 In main, when a line of αρχείου commands.txt εντοπιστεί η φράση INSERT GRAPH τότε οι 3 συμβολοσειρές που ακολουθούν  μετατρέπονται σε ακέραιους και καλείται η insert για το αντικείμενο gr που είναι ο γράφος μας με παραμέτρους τις 3 αυτές τιμές n1,n2 και w.
 
-Με την συνάρτηση insert εισάγουμε στον γράφο τις κορυφές με τιμή n1 και n2 αν αυτές δεν υπάρχουν ήδη. Επίσης εισάγουμε στον γράφο την ακμή με τερματικά σημεία τις κορυφές με τιμές n1 και n2 και βάρος w. Αρχικά αναζητούμε τις 2 κορυφές στον γράφο. Αν κάποια από αυτές δεν υπάρχει τότε την εισάγουμε στον γράφο προσθέτοντάς την στον πίνακα koryfes και αυξάνουμε κατάλληλα την τάξη του γράφου. Αν και οι δύο κορυφές υπάρχουν ήδη στον γράφο, τότε απλά εισάγουμε την ακμή που τις συνδέει. Η εισαγωγή της ακμής γίνεται ως εξής: για τις κορυφές n1 και n2 καλούμε την insert της κλάσης τους με παράμετρο την άλλη κορυφή και το βάρος της ακμής που θέλουμε να εισάγουμε και τη θέση της άλλης κορυφής στον πίνακα koryfes και αυξάνουμε το μέγεθος του γράφου κατά 1.
+Με την συνάρτηση insert εισάγουμε στον γράφο τις κορυφές με τιμή n1 και n2 αν αυτές δεν υπάρχουν ήδη. Επίσης εισάγουμε στον γράφο την ακμή με τερματικά σημεία τις κορυφές με τιμές n1 και n2 και βάρος w. Αρχικά αναζητούμε τις 2 κορυφές στον γράφο. Αν κάποια από αυτές δεν υπάρχει τότε την εισάγουμε στον γράφο προσθέτοντάς την στον πίνακα "vertices" και αυξάνουμε κατάλληλα την τάξη του γράφου. Αν και οι δύο κορυφές υπάρχουν ήδη στον γράφο, τότε απλά εισάγουμε την ακμή που τις συνδέει. Η εισαγωγή της ακμής γίνεται ως εξής: για τις κορυφές n1 και n2 καλούμε την insert της κλάσης τους με παράμετρο την άλλη κορυφή και το βάρος της ακμής που θέλουμε να εισάγουμε και τη θέση της άλλης κορυφής στον πίνακα "vertices" και αυξάνουμε το μέγεθος του γράφου κατά 1.
 
 
 
@@ -312,7 +317,7 @@ In main, when a line of αρχείου commands.txt εντοπιστεί η φρ
 
 Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση COMPUTESHORTESTPATH GRAPH number1 number2 τότε μετατρέπουμε τις δύο συμβολοσειρές που ακολουθούν την φράση COMPUTESHORTESTPATH GRAPH σε ακέραιες και τις αποθηκεύουμε στις ακέραιες μεταβλητές n1 και n2. Έπειτα καλείται η συνάρτηση Dijkstra για τον γράφο με παραμέτρους τις τιμές n1,n2 και το αποτέλεσμά της εγγράφεται στο αρχείο output.txt.
 
-Στη συνάρτηση Dijkstra χρησιμοποιείται μία επιπλέον κλάση η οποία μοιάζει με την κλάση του σωρού ελαχίστων. Η κλάση αυτή ονομάζεται minheap_gr. Η κλάση αυτή λειτουργεί σαν τον σωρό ελαχίστων που έχουμε ήδη εξηγήσει. Οι διαφορές τους αναφέρονται παρακάτω. Αρχικά, η minheap_gr αντί να δέχεται ως τιμές των κόμβων ακέραιους αριθμούς, δέχεται κόμβους του γράφου τους οποίους αποθηκεύει σε έναν δυναμικό πίνακα v. Επίσης, έχει έναν ακέραιο δυναμικό πίνακα keys. Οι τιμές του σωρού διατάσσονται με βάση τις τιμές του πίνακα keys. Επίσης έχει έναν δυναμικό πίνακα th_ston_k στον οποίο αποθηκεύονται οι θέσεις των κορυφών του πίνακα v στον πίνακα koryfes. Οι 3 δυναμικοί πίνακες είναι παράλληλοι.
+Στη συνάρτηση Dijkstra χρησιμοποιείται μία επιπλέον κλάση η οποία μοιάζει με την κλάση του σωρού ελαχίστων. Η κλάση αυτή ονομάζεται minheap_gr. Η κλάση αυτή λειτουργεί σαν τον σωρό ελαχίστων που έχουμε ήδη εξηγήσει. Οι διαφορές τους αναφέρονται παρακάτω. Αρχικά, η minheap_gr αντί να δέχεται ως τιμές των κόμβων ακέραιους αριθμούς, δέχεται κόμβους του γράφου τους οποίους αποθηκεύει σε έναν δυναμικό πίνακα v. Επίσης, έχει έναν ακέραιο δυναμικό πίνακα keys. Οι τιμές του σωρού διατάσσονται με βάση τις τιμές του πίνακα keys. Επίσης έχει έναν δυναμικό πίνακα th_ston_k στον οποίο αποθηκεύονται οι θέσεις των κορυφών του πίνακα v στον πίνακα "vertices". Οι 3 δυναμικοί πίνακες είναι παράλληλοι.
 
 Η κλάση minheap_gr έχει την συνάρτηση decreasekey, η οποία εντοπίζει την κορυφή που δέχεται ως πρώτη παράμετρο στον σωρό, και σε εκείνο το στοιχείο του σωρού αποθηκεύει στο keys την 2η παράμετρο. Στη συνέχεια η συνάρτηση φροντίζει έτσι ώστε ο σωρός να παραμείνει σωρός ελαχιστων με την κλήση των συναρτήσεων sortdeleted και sort.
 
@@ -320,15 +325,15 @@ In main, when a line of αρχείου commands.txt εντοπιστεί η φρ
 
 Η συνάρτηση Dijkstra δέχεται δύο ακέραιες μεταβλητές n1,n2 ως παραμέτρους. Η συνάρτηση υπολογίζει και επιστρέφει το κόστος της ελάχιστης διαδρομής από τον κόμβο με τιμή n1 μέχρι τον κόμβο με τιμή n2. Η συνάρτηση Dijkstra έχει τον ακέραιο πίνακα d στον οποίο αποθηκεύει τις αποστάσεις όλων των κόμβων του γράφου από τον κόμβο με τιμή n1.
 
-Στην συνάρτηση κάθε κόμβος του γράφου εισάγεται στον σωρό ελαχίστων με 2η παράμετρο του το στοιχείο d που αντιστοιχεί σε αυτόν και 3η παράμετρο την θέση του στον πίνακα koryfes. Ο Dijkstra λειτουργεί ως εξής: κάθε φορά διαγράφεται η ρίζα από τον σωρό και ενημερώνεται ο πίνακας d αν με το στοιχείο που διαγράφηκε από τον σωρό μειώνεται κάποια από τις αποστάσεις του κόμβου με τιμή n1 προς κάποιον γειτονικό κόμβο του στοιχείου αυτού που διαγράφεται από τον σωρό
+Στην συνάρτηση κάθε κόμβος του γράφου εισάγεται στον σωρό ελαχίστων με 2η παράμετρο του το στοιχείο d που αντιστοιχεί σε αυτόν και 3η παράμετρο την θέση του στον πίνακα "vertices". Ο Dijkstra λειτουργεί ως εξής: κάθε φορά διαγράφεται η ρίζα από τον σωρό και ενημερώνεται ο πίνακας d αν με το στοιχείο που διαγράφηκε από τον σωρό μειώνεται κάποια από τις αποστάσεις του κόμβου με τιμή n1 προς κάποιον γειτονικό κόμβο του στοιχείου αυτού που διαγράφεται από τον σωρό
 
 -FINDCONNECTEDCOMPONENTS GRAPH
 
 In main, when the phrase FINDCONNECTEDCOMPONENTS GRAPH is detected in a line of "commands.txt" then the method fcc of the graph is called and the value it returns is written in the file "output.txt".
 
-In the method fcc there is the array "color" in which the color of each κορυφή is saved. If we haven't visited the κορυφή yet, the color is 'w'. While we are visiting it th color is 'g'. After we have vistied it the color is 'b'. Initially, the color of each κορυφών is 'w'. Για κάθε κορυφή, αν δεν την έχουμε επισκεπτεί, αυξάνουμε το πλήθος των συνεκτικών συνιστωσών κατά 1 και επισκεπτόμαστε αυτή την κορυφή και κάθε κορυφή της συνεκτικής συνιστώσας στην οποία ανήκει. Αυτό γίνεται με τη συνάρτηση DFSVisit.
+In the method fcc there is the array "color" in which the color of each κορυφή is saved. If we haven't visited the κορυφή yet, the color is 'w'. While we are visiting it th color is 'g'. After we have visited it the color is 'b'. Initially, the color of each κορυφών is 'w'. Για κάθε κορυφή, αν δεν την έχουμε επισκεπτεί, αυξάνουμε το πλήθος των συνεκτικών συνιστωσών κατά 1 και επισκεπτόμαστε αυτή την κορυφή και κάθε κορυφή της συνεκτικής συνιστώσας στην οποία ανήκει. Αυτό γίνεται με τη συνάρτηση DFSVisit.
 
-Η αναδρομική συνάρτηση DFSVisit δέχεται ως παράμετρο τον πίνακα color και μία ακέραια μεταβλητή u και προσπελάυνει τα στοιχεία της συνιστώσας που περιέχει την κορυφή που βρίσκεται στην θέση u στον πίνακα koryfes. Η συνάρτηση ενημερώνει και τον πίνακα color.
+Η αναδρομική συνάρτηση DFSVisit δέχεται ως παράμετρο τον πίνακα color και μία ακέραια μεταβλητή u και προσπελάυνει τα στοιχεία της συνιστώσας που περιέχει την κορυφή που βρίσκεται στην θέση u στον πίνακα "vertices". Η συνάρτηση ενημερώνει και τον πίνακα color.
 
 
 
@@ -337,11 +342,11 @@ In the method fcc there is the array "color" in which the color of each κορυ
 Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση COMPUTESPANNINGTREE GRAPH τότε καλείται η συνάρτηση cc2 για τον γράφο και το αποτέλεσμά της, που είναι το κόστος του ελάχιστου εκτεινόμενου δένδρου του γράφου, εγγράφεται στο αρχείο output.txt.
 
 The method cc2 helps in the execution of the Prim algorithm for each συνιστώσα of the graph. Η συνάρτηση έχει έναν πίνακα color2 στον οποίο έχει αποθηκευμένο το χρώμα κάθε κορυφής. Αν δεν έχουμε επισκεπτεί την κορυφή τότε το χρώμα της είναι 'w'.
-Όσο την επισκεπτόμαστε το χρώμα της είναι 'g'. Αφού την επισκεπτούμε το χρώμα της είναι 'b'. Για κάθε κορυφή του γράφου αν δεν την έχουμε επισκεπτεί τότε έχουμε έναν πίνακα color3, τον οποίο αρχικοποιούμε με 'w', και καλούμε τη συνάρτηση DFSVisit2 με παραμέτρους τον color2, την θέση της κορυφής στον πίνακα koryfes και τον color3. Η DFSVisit2 λειτουργεί σαν την DFSVisit μόνο που ενημερώνει και τον πίνακα color3. Άρα, ο color3 μετά την εκτέλεση της DFSVisit2 περιέχει την τιμή 'b' μόνο για τις κορυφές της συνεκτικής συνιστώσας στην οποία ανήκει η κορυφή της θέσης i του πίνακα koryfes.
+Όσο την επισκεπτόμαστε το χρώμα της είναι 'g'. Αφού την επισκεπτούμε το χρώμα της είναι 'b'. Για κάθε κορυφή του γράφου αν δεν την έχουμε επισκεπτεί τότε έχουμε έναν πίνακα color3, τον οποίο αρχικοποιούμε με 'w', και καλούμε τη συνάρτηση DFSVisit2 με παραμέτρους τον color2, την θέση της κορυφής στον πίνακα "vertices" και τον color3. Η DFSVisit2 λειτουργεί σαν την DFSVisit μόνο που ενημερώνει και τον πίνακα color3. Άρα, ο color3 μετά την εκτέλεση της DFSVisit2 περιέχει την τιμή 'b' μόνο για τις κορυφές της συνεκτικής συνιστώσας στην οποία ανήκει η κορυφή της θέσης i του πίνακα "vertices".
 
 cc2 returns the cost of the minimum spanning tree that it computes with the variable "result". Η result αρχικοποιείται με 0 και μετά από κάθε εκτέλεση του DFSVisit2 ενημερώνεται. Κάθε φορά η result αυξάνεται κατά την τιμή που επιστρέφει η συνάρτηση Prim με παραμέτρους τον πίνακα color3 και την θέση i.
 
-The method Prim has 2 arrays: "color" and "key". Αρχικά, οι πίνακες αρχικοποιούνται, ο color με 'w' και ο key με τον μεγαλύτερο δυνατό ακέραιο (INT_MAX). Έχουμε έναν σωρό ελαχίστων τύπου minheap_gr στον οποίο εισάγουμε κάθε κόμβο του γράφου με το αντίστοιχο key και τη θέση του στον πίνακα koryfes.
+The method Prim has 2 arrays: "color" and "key". Αρχικά, οι πίνακες αρχικοποιούνται, ο color με 'w' και ο key με τον μεγαλύτερο δυνατό ακέραιο (INT_MAX). Έχουμε έναν σωρό ελαχίστων τύπου minheap_gr στον οποίο εισάγουμε κάθε κόμβο του γράφου με το αντίστοιχο key και τη θέση του στον πίνακα "vertices".
 
 Όσο ο σωρός έχει στοιχεία διαγράφουμε τη ρίζα του και την αποθηκεύουμε στην κορυφή u. Για κάθε γειτονική κορυφή της u αν δεν την έχουμε επισκεπτεί και μπορούμε να μειώσουμε το key του u μέσω αυτής τότε ενημερώνουμε το key και τον σωρό.
 
@@ -381,7 +386,7 @@ The method Prim has 2 arrays: "color" and "key". Αρχικά, οι πίνακε
 
 -GETSIZE HASHTABLE
 
-Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση GETSIZE HASHTABLE τότε εγγράφουμε στο αρχείο output.txt το μέγεθος του hashatble, το οποίο παίρνουμε με τη συνάρτηση getsize και στη συνέχεια αλλάζουμε γραμμή. Η συνάρτηση getsize υπολογίζει και επιστρέφει το πλήθος των στοιχείων του πίνακα κατακερματισμού. Συγκεκριμένα, η συνάρτηση έχει μία μετβαλητή pl_st που συμβολίζει το πλήθος των στοιχείων του πίνακα κατακερματισμού. Η pl_st αρχικοποιείται με 0. Για κάθε στοιχείο του πίνακα data αν το στοιχείο είναι διάφορο του -1 τότε το pl_st αυξάνεται κατά 1. Τέλος, επιστρέφεται το pl_st.
+Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση GETSIZE HASHTABLE τότε εγγράφουμε στο αρχείο output.txt το μέγεθος του hashtable, το οποίο παίρνουμε με τη συνάρτηση getsize και στη συνέχεια αλλάζουμε γραμμή. Η συνάρτηση getsize υπολογίζει και επιστρέφει το πλήθος των στοιχείων του πίνακα κατακερματισμού. Συγκεκριμένα, η συνάρτηση έχει μία μετβαλητή pl_st που συμβολίζει το πλήθος των στοιχείων του πίνακα κατακερματισμού. Η pl_st αρχικοποιείται με 0. Για κάθε στοιχείο του πίνακα data αν το στοιχείο είναι διάφορο του -1 τότε το pl_st αυξάνεται κατά 1. Τέλος, επιστρέφεται το pl_st.
 
 
 
