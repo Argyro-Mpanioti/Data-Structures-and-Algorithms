@@ -16,7 +16,7 @@ The minheap class has 2 attributes:
 > "size": the size of the minheap
 > "value": dynamic array that contains the values of the nodes in the heap
 
-Minheap has the default constructor, that initializes the "size" attribute as 0 and assigns NULL to the array "value".
+Minheap has the default constructor, that initializes the "size" attribute as 0 and assigns nullptr to the array "value".
 
 The method "build" gets as a parameter the name of the file from which it reads the values that should be added in the minheap.
 Each value that is read from the file is saved in a string and then turned into an integer with the function "stoi".
@@ -105,13 +105,13 @@ In order to explain how the class avltree works we should first explain how the 
 
 The class node has 4 attributes:
 > value: integer that contains the value of the node
-> lc: a pointer to the node that contains the left child. If the node doesn't have a left child then the pointer points to NULL.
-> rc: a pointer to the node that contains the right child. If the node doesn't have a right child then the pointer points to NULL.
-> pr: a pointer to the node that contains the parent. If the node doesn't have a parent (so if the node is the root) then the pointer points to NULL.
+> lc: a pointer to the node that contains the left child. If the node doesn't have a left child then the pointer points to nullptr.
+> rc: a pointer to the node that contains the right child. If the node doesn't have a right child then the pointer points to nullptr.
+> pr: a pointer to the node that contains the parent. If the node doesn't have a parent (so if the node is the root) then the pointer points to nullptr.
 
 The class node has the methods:
-> A default constructor that makes the value of the node 0 and makes the children pointers point to NULL
-> A constructor that gets as a parameter an integer and makes it the value of the node and makes the pointers to the children point to NULL
+> A default constructor that makes the value of the node 0 and makes the children pointers point to nullptr
+> A constructor that gets as a parameter an integer and makes it the value of the node and makes the pointers to the children point to nullptr
 > Setters and getters for the private attributes
 
 
@@ -128,7 +128,7 @@ The class of the AVL tree has 2 attributes:
 > root: pointer to an object with the type node. It points to the root of the tree.
 > size: integer that contains the size of the AVL tree.
 
-The class "avltree" has the default constructor that initializes the size of the tree to 0 and makes root point to NULL.
+The class "avltree" has the default constructor that initializes the size of the tree to 0 and makes root point to nullptr.
 It also has the method "build" that works in the same way that the "build" methods of the classes "minheap" and "maxheap" work.
 
 
@@ -149,7 +149,7 @@ Otherwise, we search for the parent of the element starting from the root.
 2) Execution of the necessary rotations so that the tree remains an AVL tree:
 For the execution of these rotations the method rotations is called. The parameter of the function is the pointer of the node we inserted.
 
-The method rotations gets as a parameter a pointer to a node of the tree. The method has the boolean variable "balanced". balanced is true when we do the rotation.
+The method rotations gets as a parameter a pointer to a node of the tree. The method has the bool variable "balanced". balanced is true when we do the rotation.
 The method checks if a rotation is needed for the tree that has as a root the node it receives or any of its ancestors. If a rotation is needed, then it executes that rotation.
 
 Specifically, if the node is empty or the necessary rotation has been executed for the tree to be an avltree then it returns. Otherwise, it calculates the height of the 2 subtrees using the function foo (the content of the function foo is explained later on).
@@ -251,15 +251,15 @@ If we haven't returned to main, then in the tree there is a node that has the sa
 1st step: We delete the node from the tree so that the tree can remain a binary search tree.
 2nd step: We execute the necessary rotations so that the tree can remain an AVL tree.
 
-Initially, we have 2 bool variables, "root" and "right".
-We make "root" true if the node we found while searching is the root.
-We make "right" true if the node we found while searching is the right child of its parent.
+Initially, we have 2 bool variables, "is_root" and "is_right".
+We make "is_root" true if the node we found while searching is the root.
+We make "is_right" true if the node we found while searching is the right child of its parent.
 
 If the node is a leaf:
 1st step:
-If the node is the root then we make the root point to NULL.
-Otherwise, if the node is its parent's right child, then the parent's right child becomes NULL.
-Otherwise, if the node is its parent's left child, then the parent's left child becomes NULL.
+If the node is the root then we make the root point to nullptr.
+Otherwise, if the node is its parent's right child, then the parent's right child becomes nullptr.
+Otherwise, if the node is its parent's left child, then the parent's left child becomes nullptr.
 2nd step:
 We call the function rotations. The parameter we pass is the pointer to the parent of the node we are deleting.
 This doesn't need to be done if the node is both a leaf and the root because then there are no other elements.
@@ -282,7 +282,7 @@ The method "rotations" is called. The parameter it takes is the pointer to the l
 
 Otherwise, if the node has both a left and a right subtree:
 1st step:
-The node is replaced by the smallest element of its right subtree and the left child of the element's parent points to NULL. But if the right subtree only contains 1 element then the parent of the smallest element of the right subtree is the node itself. So, in this case the right child points to NULL, not the left one.
+The node is replaced by the smallest element of its right subtree and the left child of the element's parent points to nullptr. But if the right subtree only contains 1 element then the parent of the smallest element of the right subtree is the node itself. So, in this case the right child points to nullptr, not the left one.
 2nd step:
 The method "rotations" is called. The parameter it takes is the pointer to the new smallest element of the right subtree of the node we are deleting.
 
@@ -414,7 +414,7 @@ DFSVisit2 works like DFSVisit but in addition to this, it updates the array colo
 
 cc2 returns the cost of the minimum spanning tree that it computes with the variable "result".
 Initially, result has the value 0 and after every execution of the method DFSVisit2 it is updated.
-Every time result is increased by the value returned by the method Prim. The parameters we pass to Prin are the array color3 and the integer i that indicates the position.
+Every time result is increased by the value returned by the method Prim. The parameters we pass to Prim are the array color3 and the integer i that indicates the position.
 
 The method Prim has 2 arrays: "color" and "key". We initialize color with 'w' and key with the biggest possible integer (INT_MAX). We have a minheap of the class minheap_graph in which we insert every vertex of the graph with its key and its position in the array "vertices".
 
