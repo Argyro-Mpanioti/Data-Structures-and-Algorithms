@@ -29,17 +29,17 @@ int main()
     char *filename4; //Δημιουργούμε έναν δείκτη σε χαρακτήρα με όνομα filename4 ο οποίος θα δείχνει στον πίνακα που θα περιέχει το όνομα του αρχείου από το οποίο θα διβαάζει τα στοιχεία ο κατασκευαστής του γράφου
     char *filename5; //Δημιουργούμε έναν δείκτη σε χαρακτήρα με όνομα filename5 ο οποίος θα δείχνει στον πίνακα που θα περιέχει το όνομα του αρχείου από το οποίο θα διβαάζει τα στοιχεία ο κατασκευαστής του πίνακα κατακερματισμού
 
-    
+
     minheap minheap; //Δημιουργούμε ένα αντικείμενο της κλάσης minheap με όνομα minheap_object. Αυτό θα είναι ο σωρός ελαχίστων μας.
     maxheap maxheap; //Δημιουργούμε ένα αντικείμενο της κλάσης maxheap με όνομα maxheap_object. Αυτό θα είναι ο σωρός μεγίστων μας.
-    avltree avl; //Δημιουργούμε ένα αντικείμενο της κλάσης avltree με όνομα avl. Αυτό θα είναι το δένδρο AVL μας.
+    avltree avltree; //Δημιουργούμε ένα αντικείμενο της κλάσης avltree με όνομα avl. Αυτό θα είναι το δένδρο AVL μας.
     graph graph; //Δημιουργούμε ένα αντικείμενο της κλάσης graph με όνομα gr. Αυτό θα είναι ο γράφος μας.
     hashtable hashtable; //Δημιουργούμε ένα αντικείμενο της κλάσης hashtable με όνομα hash. Αυτό θα είναι ο πίνακας κατακερματισμού μας.
     
     
     clock_t start; //Στην μεταβλητή start θα αποθηκεύσουμε τον χρόνο πριν την εκτέλεση ορισμένων εντολών τις οποίες χρειάζεται να χρονομετρήσουμε
     clock_t end; //Στην μεταβλητή end θα αποθηκεύσουμε τον χρόνο πριν την εκτέλεση ορισμένων εντολών τις οποίες χρειάζεται να χρονομετρήσουμε
-    float duration; //Στη μεταβλητή duration θα αποθηκεύσουμε τον χρόνο εκτέλεσης ορισμένων εντολών
+    double duration; //Στη μεταβλητή duration θα αποθηκεύσουμε τον χρόνο εκτέλεσης ορισμένων εντολών
     
     
     
@@ -61,16 +61,18 @@ int main()
             
             
             
-            if(strstr(com,"BUILD MINHEAP")!=NULL) //Αν στη γραμμή i του πίνακα χαρκτήρων υπάρχει η εντολή "BUILD MINHEAP" τότε εκτέλεσε τις παρακάτω εντολές
+            if(strstr(com,"BUILD MINHEAP")!=nullptr) //Αν στη γραμμή i του πίνακα χαρκτήρων υπάρχει η εντολή "BUILD MINHEAP" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 
                 start=clock();
-                
-                filename=new char[strlen(com)-14]; //Δεσμεύουμε τόσες θέσεις όσες χρειάζόμαστε για να αποθηκεύσουμε το μήκος του ονόματος του αρχείου που θα χρειαστεί να ανοίξουμε, δηλαδή όσο το μήκος της εντολής του αρχείου commands.txt μείον το μήκος του "BUILD MINHEAP"
-                for(j=14;j<strlen(com);j++)
+
+                filename=new char[(int)strlen(com)-13]; //Δεσμεύουμε τόσες θέσεις όσες χρειάζόμαστε για να αποθηκεύσουμε το μήκος του ονόματος του αρχείου που θα χρειαστεί να ανοίξουμε, δηλαδή όσο το μήκος της εντολής του αρχείου commands.txt μείον το μήκος του "BUILD MINHEAP"
+                for(j=14;j<(int)strlen(com);j++)
                 {
                     filename[j-14]=com[j];
                 }
+                filename[j-14]='\0';
+                
                 //Με την παραπάνω for αποθηκεύουμε στον πίνακα χαρακτήρων filename το όνομα του αρχείου που θα χρειαστεί να ανοίξουμε
                 minheap.build(filename); //Εκτελούμε την συνάρτηση build με παράμετρο το όνομα του αρχείου filename για το αντικείμενο minheap_object
                                 
@@ -78,7 +80,7 @@ int main()
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της BUILD MINHEAP: "<<duration<<endl;
             }
-            else if(strstr(com,"GETSIZE MINHEAP")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "GETSIZE  MINHEAP" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"GETSIZE MINHEAP")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "GETSIZE  MINHEAP" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -88,7 +90,7 @@ int main()
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της GETSIZE MINHEAP: "<<duration<<endl;
             }
-            else if(strstr(com,"FINDMIN MINHEAP")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "FINDMIN MINHEAP" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"FINDMIN MINHEAP")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "FINDMIN MINHEAP" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -98,7 +100,7 @@ int main()
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της FINDMIN MINHEAP: "<<duration<<endl;
             }
-            else if(strstr(com,"INSERT MINHEAP")!=NULL)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "INSERT MINHEAP" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"INSERT MINHEAP")!=nullptr)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "INSERT MINHEAP" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -123,7 +125,7 @@ int main()
                     f2<<"Χρόνος εκτέλεσης της INSERT MINHEAP "<<number<<": "<<duration<<endl;
                 }
             }
-            else if(strstr(com,"DELETEMIN MINHEAP")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "DELETEMIN  MINHEAP" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"DELETEMIN MINHEAP")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "DELETEMIN  MINHEAP" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -140,13 +142,13 @@ int main()
             
             
             
-            else if(strstr(com,"BUILD MAXHEAP")!=NULL) //Αν στη γραμμή i του πίνακα χαρκτήρων υπάρχει η εντολή "BUILD MAXHEAP" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"BUILD MAXHEAP")!=nullptr) //Αν στη γραμμή i του πίνακα χαρκτήρων υπάρχει η εντολή "BUILD MAXHEAP" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 
                 start=clock();
                                 
                 filename2=new char[strlen(com)-13]; //Δεσμεύουμε τόσες θέσεις όσες χρειάζόμαστε για να αποθηκεύσουμε το μήκος του ονόματος του αρχείου που θα χρειαστεί να ανοίξουμε, δηλαδή όσο το μήκος της εντολής του αρχείου commands.txt μείον το μήκος του "BUILD MAXHEAP"
-                for(j=14;j<strlen(com);j++)
+                for(j=14;j<int(strlen(com));j++)
                 {
                     filename2[j-14]=com[j];
                 }
@@ -156,9 +158,9 @@ int main()
                 
                 end=clock();
                 duration=((double)end-start)/CLOCKS_PER_SEC;
-                f2<<"Χρόνος εκτέλεσης της BUILD MAXHEAP: "<<duration<<endl;
+                f2<<"\nΧρόνος εκτέλεσης της BUILD MAXHEAP: "<<duration<<endl;
             }
-            else if(strstr(com,"GETSIZE MAXHEAP")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "GETSIZE  MAXHEAP" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"GETSIZE MAXHEAP")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "GETSIZE  MAXHEAP" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -168,7 +170,7 @@ int main()
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της GETSIZE MAXHEAP: "<<duration<<endl;
             }
-            else if(strstr(com,"FINDMAX MAXHEAP")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "FINDMAX MAXHEAP" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"FINDMAX MAXHEAP")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "FINDMAX MAXHEAP" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -178,7 +180,7 @@ int main()
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της FINDMAX MAXHEAP: "<<duration<<endl;
             }
-            else if(strstr(com,"INSERT MAXHEAP")!=NULL)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "INSERT MAXHEAP" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"INSERT MAXHEAP")!=nullptr)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "INSERT MAXHEAP" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -201,7 +203,7 @@ int main()
                 f2<<"Χρόνος εκτέλεσης της INSERT MAXHEAP "<<number<<": "<<duration<<endl;
                 
             }
-            else if(strstr(com,"DELETEMAX MAXHEAP")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "DELETEMAX  MAXHEAP" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"DELETEMAX MAXHEAP")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "DELETEMAX  MAXHEAP" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -218,14 +220,14 @@ int main()
 
 
             
-            else if(strstr(com,"BUILD AVLTREE")!=NULL) //Αν στη γραμμή i του πίνακα χαρκτήρων υπάρχει η εντολή "BUILD AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"BUILD AVLTREE")!=nullptr) //Αν στη γραμμή i του πίνακα χαρκτήρων υπάρχει η εντολή "BUILD AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 
                 start=clock();
                 
                 
                 filename3=new char[strlen(com)-13]; //Δεσμεύουμε τόσες θέσεις όσες χρειάζόμαστε για να αποθηκεύσουμε το μήκος του ονόματος του αρχείου που θα χρειαστεί να ανοίξουμε, δηλαδή όσο το μήκος της εντολής του αρχείου commands.txt μείον το μήκος του "BUILD AVLTREE" 
-                for(j=14;j<strlen(com);j++)
+                for(j=14;j<(int)strlen(com);j++)
                 {
                     filename3[j-14]=com[j];
                 }
@@ -233,33 +235,33 @@ int main()
                 //Με την παραπάνω for αποθηκεύουμε στον πίνακα χαρακτήρων filename3 το όνομα του αρχείου που θα χρειαστεί να ανοίξουμε
 
                 
-                avl.build(filename3); //Εκτελούμε την συνάρτηση build με παράμετρο το όνομα του αρχείου filename3 για το αντικείμενο avl
+                avltree.build(filename3); //Εκτελούμε την συνάρτηση build με παράμετρο το όνομα του αρχείου filename3 για το αντικείμενο avl
                 
                 end=clock();
                 duration=((double)end-start)/CLOCKS_PER_SEC;
-                f2<<"Χρόνος εκτέλεσης της BUILD AVLTREE: "<<duration<<endl;
+                f2<<"\nΧρόνος εκτέλεσης της BUILD AVLTREE: "<<duration<<endl;
                 
             }
-            else if(strstr(com,"GETSIZE AVLTREE")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "GETSIZE  AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"GETSIZE AVLTREE")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "GETSIZE  AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
-                f2<<"Το μέγεθος του δένδρου AVL είναι: "<<avl.getsize()<<endl; //Εγγράφουμε στο αρχείο output.txt το μέγεθος του δένδρου AVL, το οποίο παίρνουμε με τη συνάρτηση getsize και στη συνέχεια αλλάζουμε γραμμή
+                f2<<"Το μέγεθος του δένδρου AVL είναι: "<<avltree.getsize()<<endl; //Εγγράφουμε στο αρχείο output.txt το μέγεθος του δένδρου AVL, το οποίο παίρνουμε με τη συνάρτηση getsize και στη συνέχεια αλλάζουμε γραμμή
                 end=clock();
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της GETSIZE AVLTREE: "<<duration<<endl;
             }
-            else if(strstr(com,"FINDMIN AVLTREE")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "FINDMIN AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"FINDMIN AVLTREE")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "FINDMIN AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
-                f2<<"Το ελάχιστο στοιχείο από το δένδρο AVL είναι το: "<<avl.findmin()<<endl; //Εγγράφουμε το ελάχιστο στοιχείο του δένδρου AVL στο output.txt και στη συνέχεια αλλάζουμε γραμμή
+                f2<<"Το ελάχιστο στοιχείο από το δένδρο AVL είναι το: "<<avltree.findmin()<<endl; //Εγγράφουμε το ελάχιστο στοιχείο του δένδρου AVL στο output.txt και στη συνέχεια αλλάζουμε γραμμή
                 
                 end=clock();
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της FINDMIN AVLTREE: "<<duration<<endl;
             }
-            else if(strstr(com,"SEARCH AVLTREE")!=NULL)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "SEARCH AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"SEARCH AVLTREE")!=nullptr)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "SEARCH AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 int number; //Δημιουργούμε μία ακέραια μεταβλητή number στην οποία θα αποθηκεύσουμε το στοιχείο που θέλουμε να προσθέσουμε στο δένδρο AVL
@@ -276,14 +278,14 @@ int main()
                 }
 
 
-                f2<<"Βρέθηκε το στοιχείο με τιμή "<<number<<" στο δένδρο AVL? "<<avl.search(number)<<endl; //Εγγράφουμε στο αρχείο output.txt αν βρέθηκε το στοιχείο με τιμή την τιμή που δίνεται στο αρχείο commands.txt
+                f2<<"Βρέθηκε το στοιχείο με τιμή "<<number<<" στο δένδρο AVL? "<<avltree.search(number)<<endl; //Εγγράφουμε στο αρχείο output.txt αν βρέθηκε το στοιχείο με τιμή την τιμή που δίνεται στο αρχείο commands.txt
                 
                 end=clock();
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της SEARCH AVLTREE "<<number<<": "<<duration<<endl;
                 
             }
-            else if(strstr(com,"INSERT AVLTREE")!=NULL)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "INSERT AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"INSERT AVLTREE")!=nullptr)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "INSERT AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -300,7 +302,7 @@ int main()
                 }
                 
                 
-                avl.insert(number); //Καλούμε την insert για το αντικείμενο avl με παράμετρο τη μεταβλητή number
+                avltree.insert(number); //Καλούμε την insert για το αντικείμενο avl με παράμετρο τη μεταβλητή number
                 
                 
                 end=clock();
@@ -308,7 +310,7 @@ int main()
                 f2<<"Χρόνος εκτέλεσης της INSERT AVLTREE "<<number<<": "<<duration<<endl;
                 
             }
-            else if(strstr(com,"DELETE AVLTREE")!=NULL)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "DELETE AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"DELETE AVLTREE")!=nullptr)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "DELETE AVLTREE" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -324,7 +326,7 @@ int main()
                     number=(number*10)+((int)com[k]-48); //Κάθε φορά που συναντάμε και άλλον χαρακτήρα που είναι νούμερο μετακινούμε όλους τους υπόλοιπους αριθμούς μία θέση προς τα αριστερά (πολλαπλασιάζοντας με το 10) και τοποθετούμε τον νέο αριθμό που συναντάμε στο τέλος (προσθέτοντας τον αφού τον μετατρέψει σε ακέραια μορφή)
                 }
                 
-                avl.delete_node(number); //Καλούμε την delete_node για το αντικείμενο avl με παράμετρο τη μεταβλητή number
+                avltree.delete_node(number); //Καλούμε την delete_node για το αντικείμενο avl με παράμετρο τη μεταβλητή number
                 
                 
                 end=clock();
@@ -332,7 +334,7 @@ int main()
                 f2<<"Χρόνος εκτέλεσης της DELETE AVLTREE "<<number<<": "<<duration<<endl;
                 
             }
-            
+
 
 
             
@@ -340,14 +342,14 @@ int main()
 
 
             
-            else if(strstr(com,"BUILD GRAPH")!=NULL) //Αν στη γραμμή i του πίνακα χαρκτήρων υπάρχει η εντολή "BUILD GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"BUILD GRAPH")!=nullptr) //Αν στη γραμμή i του πίνακα χαρκτήρων υπάρχει η εντολή "BUILD GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 
                 start=clock();
                 
                 
                 filename4=new char[strlen(com)-11]; //Δεσμεύουμε τόσες θέσεις όσες χρειάζόμαστε για να αποθηκεύσουμε το μήκος του ονόματος του αρχείου που θα χρειαστεί να ανοίξουμε, δηλαδή όσο το μήκος της εντολής του αρχείου commands.txt μείον το μήκος του "BUILD GRAPH"
-                for(j=12;j<strlen(com);j++)
+                for(j=12;j<(int)strlen(com);j++)
                 {
                     filename4[j-12]=com[j];
                 }
@@ -358,10 +360,10 @@ int main()
                 
                 end=clock();
                 duration=((double)end-start)/CLOCKS_PER_SEC;
-                f2<<"Χρόνος εκτέλεσης της BUILD GRAPH: "<<duration<<endl;
+                f2<<"\nΧρόνος εκτέλεσης της BUILD GRAPH: "<<duration<<endl;
                 
             }
-            else if(strstr(com,"GETSIZE GRAPH")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "GETSIZE  GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"GETSIZE GRAPH")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "GETSIZE  GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -372,7 +374,7 @@ int main()
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της GETSIZE GRAPH: "<<duration<<endl;
             }
-            else if(strstr(com,"INSERT GRAPH")!=NULL)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "INSERT GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"INSERT GRAPH")!=nullptr)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "INSERT GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -419,7 +421,7 @@ int main()
                 f2<<"Χρόνος εκτέλεσης της INSERT GRAPH "<<n1<<" "<<n2<<" "<<w<<": "<<duration<<endl;
                 
             }
-            else if(strstr(com,"DELETE GRAPH")!=NULL)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "DELETE GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"DELETE GRAPH")!=nullptr)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "DELETE GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -454,7 +456,7 @@ int main()
                 f2<<"Χρόνος εκτέλεσης της DELETE GRAPH "<<n1<<" "<<n2<<": "<<duration<<endl;
                 
             }
-            else if(strstr(com,"COMPUTESHORTESTPATH GRAPH")!=NULL)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "COMPUTESHORTESTPATH GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"COMPUTESHORTESTPATH GRAPH")!=nullptr)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "COMPUTESHORTESTPATH GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
               
@@ -491,7 +493,7 @@ int main()
                 f2<<"Χρόνος εκτέλεσης της COMPUTESHORTESTPATH GRAPH "<<n1<<" "<<n2<<": "<<duration<<endl;
                 
             }
-            else if(strstr(com,"FINDCONNECTEDCOMPONENTS GRAPH")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "FINDCONNECTEDCOMPONENTS GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"FINDCONNECTEDCOMPONENTS GRAPH")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "FINDCONNECTEDCOMPONENTS GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -501,7 +503,7 @@ int main()
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της FINDCONNECTEDCOMPONENTS GRAPH: "<<duration<<endl;
             }
-            else if(strstr(com,"COMPUTESPANNINGTREE GRAPH")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "COMPUTESPANNINGTREE GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"COMPUTESPANNINGTREE GRAPH")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "COMPUTESPANNINGTREE GRAPH" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -512,20 +514,19 @@ int main()
                 f2<<"Χρόνος εκτέλεσης της COMPUTESPANNINGTREE GRAPH: "<<duration<<endl;
             }
 
-
             
             //Εντολές που αφορούν το πίνακα κατακερματισμού
 
 
 
-            else if(strstr(com,"BUILD HASHTABLE")!=NULL) //Αν στη γραμμή i του πίνακα χαρκτήρων υπάρχει η εντολή "BUILD HASHTABLE" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"BUILD HASHTABLE")!=nullptr) //Αν στη γραμμή i του πίνακα χαρκτήρων υπάρχει η εντολή "BUILD HASHTABLE" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 
                 start=clock();
                 
                 
                 filename5=new char[strlen(com)-15]; //Δεσμεύουμε τόσες θέσεις όσες χρειάζόμαστε για να αποθηκεύσουμε το μήκος του ονόματος του αρχείου που θα χρειαστεί να ανοίξουμε, δηλαδή όσο το μήκος της εντολής του αρχείου commands.txt μείον το μήκος του "BUILD HASHTABLE"
-                for(j=16;j<strlen(com);j++)
+                for(j=16;j<(int)strlen(com);j++)
                 {
                     filename5[j-16]=com[j];
                 }
@@ -535,10 +536,10 @@ int main()
                 
                 end=clock();
                 duration=((double)end-start)/CLOCKS_PER_SEC;
-                f2<<"Χρόνος εκτέλεσης της BUILD HASHTABLE: "<<duration<<endl;
+                f2<<"\nΧρόνος εκτέλεσης της BUILD HASHTABLE: "<<duration<<endl;
                 
             }
-            else if(strstr(com,"INSERT HASHTABLE")!=NULL)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "INSERT HASHTABLE" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"INSERT HASHTABLE")!=nullptr)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "INSERT HASHTABLE" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 int number; //Δημιουργούμε μία ακέραια μεταβλητή number στην οποία θα αποθηκεύσουμε το στοιχείο που θέλουμε να εισάγουμε στον πίνακα κατακερματισμού
@@ -561,7 +562,7 @@ int main()
                 f2<<"Χρόνος εκτέλεσης της INSERT HASHTABLE "<<number<<": "<<duration<<endl;
                 
             }
-            else if(strstr(com,"GETSIZE HASHTABLE")!=NULL) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "GETSIZE  HASHTABLE" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"GETSIZE HASHTABLE")!=nullptr) //Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "GETSIZE  HASHTABLE" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 
@@ -571,7 +572,7 @@ int main()
                 duration=((double)end-start)/CLOCKS_PER_SEC;
                 f2<<"Χρόνος εκτέλεσης της GETSIZE HASHTABLE: "<<duration<<endl;
             }
-            else if(strstr(com,"SEARCH HASHTABLE")!=NULL)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "SEARCH HASHTABLE" τότε εκτέλεσε τις παρακάτω εντολές
+            else if(strstr(com,"SEARCH HASHTABLE")!=nullptr)//Αν στη γραμμή i του πίνακα com υπάρχει η εντολή "SEARCH HASHTABLE" τότε εκτέλεσε τις παρακάτω εντολές
             {
                 start=clock();
                 int number; //Δημιουργούμε μία ακέραια μεταβλητή number στην οποία θα αποθηκεύσουμε το στοιχείο που θέλουμε να προσθέσουμε στον πίνακα κατακερματισμού
@@ -593,7 +594,7 @@ int main()
                 f2<<"Χρόνος εκτέλεσης της SEARCH HASHTABLE "<<number<<": "<<duration<<endl;
                 
             }
-            
+
             
         }
         f2.close(); //Κλείνουμε το αρχείο output.txt

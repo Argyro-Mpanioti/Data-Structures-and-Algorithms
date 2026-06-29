@@ -46,7 +46,7 @@ void vertex::insert(vertex v2,int w,int t)
 
 	//Ελέγχουμε αν η κορυφή είναι ήδη συνδεδεμένη με την ακμή
 	for (i=0;i<edges_count;i++) {
-		if(edges[i]==v2) {
+		if(edges[i].getvalue()==v2.getvalue()) {
 			return;
 		}
 	}

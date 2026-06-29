@@ -22,16 +22,16 @@ minheap::minheap ()
 void minheap::build (const char *filename)
 {
     ifstream g;
-    string value;
-    
+    string element_value;
+
     g.open(filename);//Ανοίγουμε το αρχείο filename από το οποίο θα διαβάσουμε τα δεδομένα
     if(g.is_open()) //Ελέγχουμε αν το αρχείο άνοιξε επιτυχώς
     {
         size=0;
         
-        while(g>>value) //Όσο το αρχείο έχει γραμμές που δεν έχουν διαβαστεί αποθήκευσε την επόμενη γραμμή του στον string value
+        while(g>>element_value) //Όσο το αρχείο έχει γραμμές που δεν έχουν διαβαστεί αποθήκευσε την επόμενη γραμμή του στον string value
         {
-            insert(stoi(value)); //Εισάγουμε το στοιχείο με την τιμή που διαβάζουμε κάθε φορά από το αρχείο στον σωρό μεγίστων
+            insert(stoi(element_value)); //Εισάγουμε το στοιχείο με την τιμή που διαβάζουμε κάθε φορά από το αρχείο στον σωρό μεγίστων
         }
         
         g.close(); //Κλείνουμε το αρχείο
