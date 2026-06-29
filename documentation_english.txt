@@ -1,7 +1,7 @@
 •main.cpp
 
 In main.cpp the file commands.txt is read and the commands written in it are executed. Specifically, each line of commands.txt is read and saved in the string "line" until the command that the line contains is executed. When the command gets executed, the process is repeated for the rest of the lines of until there are no other commands in commands.txt.
-The content of line is saved in the character array "com". This is done to allow the use of the function strstr later on. After this, there is an if...else if structure that checks which command is in com. According to the command the appropriate actions are executed. The execution time is counted and written in the "output.txt" file.
+The content of line is saved in the character array "com". This is done to allow the use of the function "strstr" later on. After this, there is an if...else if structure that checks which command is in com. According to the command the appropriate actions are executed. The execution time is counted and written in the "output.txt" file.
 
 
 •minheap
@@ -9,7 +9,8 @@ The content of line is saved in the character array "com". This is done to allow
 
 -BUILD MINHEAP filename
 
-In main, when the phrase BUILD MINHEAP is detected in a line of "commands.txt" then the name of the file that contains the heap values is saved in the character array "filename". The name of the file is the string that follows "BUILD MINHEAP" in commands.txt. After this, a minheap constructor is called. The parameter of the constructor is the filename. The constructor reads the values of the file called "filename" and inserts each value in the minheap.
+In main, when the phrase BUILD MINHEAP is detected in a line of "commands.txt" then the name of the file that contains the heap values is saved in the character array filename. The name of the file is the string that follows "BUILD MINHEAP" in commands.txt.
+After this, a minheap constructor is called. The parameter of the constructor is the filename. The constructor reads the values of the file called filename and inserts each value in the minheap.
 
 The minheap class has 2 attributes:
 > "size": the size of the minheap
@@ -17,7 +18,10 @@ The minheap class has 2 attributes:
 
 Minheap has the default constructor, that initializes the "size" attribute as 0 and assigns NULL to the array "value".
 
-The method "build" gets as a parameter the name of the file from which it reads the values that should be added in the minheap. Each value that is read from the file is saved in a string and then turned into an integer with the function stoi. After this, it is inserted in the heap with the call of the method "insert". If we encounter a problem while opening the file, the message "Couldn't open file." appears.
+The method "build" gets as a parameter the name of the file from which it reads the values that should be added in the minheap.
+Each value that is read from the file is saved in a string and then turned into an integer with the function "stoi".
+After this, it is inserted in the heap with the call of the method "insert".
+If we encounter a problem while opening the file, the message "Couldn't open file." appears.
 
 This constructor and this "build" method exist for all 5 structures of this project.
 
@@ -35,24 +39,28 @@ We check whether the value of the node is non-negative. If it is negative then w
 
 In the method "insert" of the class minheap:
 We insert the integer in the heap:
-We create an array of integers that has the same size as "value" increased by 1. In the array we copy the elements of "value" and add the new element. After this we increase the size of value and copy back the elements of the new array. We also increase the size of the heap. The new element is added in the end of the array. Όμως πρέπει να γίνουν οι κατάλληλες ενέργειες έτσι ώστε ο σωρός να εξακολουθήσει να είναι σωρός ελαχίστων. Από τη θεωρία γνωρίζουμε ότι όταν αποθηκεύουμε σωρό σε πίνακα, ένα στοιχείο σε θέση n έχει γονέα σε θέση (n-1)/2. Άρα όσο το στοιχείο που εισάγουμε έχει τιμή μικρότερη από την τιμή του γονέα του, αντιμεταθέτουμε τα 2 αυτά στοιχεία και συνεχίζουμε τον έλεγχο. Μόλις το στοιχείο αποκτήσει τιμή μεγαλύτερη από την τιμή του γονέα του η διαδικασία έχει ολοκληρωθεί.
+We create an array of integers that has the same size as "value" increased by 1. In the array we copy the elements of "value" and add the new element. After this we increase the size of value and copy back the elements of the new array.
+We also increase the size of the heap. The new element is added in the end of the array. However, we need to make sure that the heap continues to be a minheap. We know that when we save a heap in an array, the element in position n has a parent that is in position (n-1)/2.
+Therefore, while the element we add has a value smaller than the value of its parent, we swap those 2 elements and continue checking. When the element has value greater than its parent's value then the process is complete.
 
 
 -GETSIZE MINHEAP
 
-In main the size of the heap is written in the file "output.txt" and after that the line is changed.
+In main the size of the heap is written in the file "output.txt".
 The size of the heap is a private attribute so in order to use it in main we call the getter getsize.
 
 -FINDMIN MINHEAP
 
-In main the minimum element of the heap is written in the file "output.txt" and after hat the line is changed.
+In main the minimum element of the heap is written in the file "output.txt".
 The minimum element of the heap is computed with the method findmin. findmin returns the content of the first element of the array "value". This element is the root of the minheap because this is the root has the minimum value in minheap.
 
 
 -DELETEMIN MINHEAP
 
 The method deletemin is called for the object minheap. This method deletes the element with the minimum value of minheap, which is the first element of th array "value".
-Η deletemin εκχωρεί στο πρώτο στοιχείο του σωρού το τελευταίο, μειώνει το μέγεθός του κατά 1 και καλεί την συνάρτηση sortdeleted η οποία κάνει τις κατάλληλες αντιμεταθέσεις έτσι ώστε ο σωρός ελαχίστων να εξακολουθήσει να είναι σωρός ελαχίστων. Η sortdeleted δέχεται ως παράμετρο τη θέση ενός γονέα στον πίνακα value και ελέγχει αν το παιδί με τη μικρότερη τιμή έχει τιμή μικρότερη από την τιμή του γονέα. Αν ναι τότε αντιμεταθέτει τις τιμές και επαναλαμβάνει τον έλεγχο για τον ίδιο γονέα και τα νέα παιδιά του (αν έχει). Ο τρόπος με τον οποίο το υλοποιείται η sortdeleted εξηγείται αναλυτικότερα στα σχόλια της συνάρτησης.
+deletemin assigns the last element of the heap to the first. After that, it reduces the heap's size by 1 and it calls the method "sortdeleted" which performs the necessary swap so that the minheap can continue to be a minheap.
+The parameter sortdeleted gets is the position of a parent in the array "value" and it checks whether the child with the smaller value has a value smaller than the parent's value.
+If yes, then it swaps the values and it repeats the checks for the same parent and it's new children (if there are any). The way in which the method "sortdeleted" is implemented is explained in more detail in the method's comments.
 
 
 
@@ -60,9 +68,12 @@ The method deletemin is called for the object minheap. This method deletes the e
 
 Note: Maxheap is very similar to minheap. For this reason, I will only explain the parts that are different to the implementation of minheap.
 
--BUILD MΑΧHEAP filename
+-BUILD MAXHEAP filename
 
-In main we follow the same process that we followed when we encountered BUILD MINHEAP. The only things that change are: 1)το όνομα της μεταβλητής στην οποία αποθηκεύουμε το όνομα του αρχείου από το οποίο παίρνουμε τις τιμές τις οποίες θα εισάγουμε στον σωρό (έτσι ώστε να μπορούμε να δίνουμε τιμές στην maxheap και στην minheap από διαφορετικά αρχεία), 2)ο τύπος και το όνομα του αντικειμένου: πλέον έχουμε αντικείμενο τύπου maxheap το οποίο ονομάζουμε maxheap
+In main, we follow the same process that we followed when we encountered BUILD MINHEAP.
+The only things that change are:
+1) the name of the variable which contains the name of the file from which we get the values that we add to the heap (so that we can assign values to maxheap and minheap from separate files)
+2) the type and name of the object: we have a maxheap object called maxheap
 
 The maxheap constructor is the same as the minheap constructor.
 The "build" method of maxheap is the same as the "build" method of minheap.
@@ -70,7 +81,9 @@ The "build" method of maxheap is the same as the "build" method of minheap.
 
 -INSERT MAXHEAP number
 
-We follow the same process that we explained in "INSERT MINHEAP number". The method "insert" of maxheap is almost the same as the method "insert" of minheap. Theor only difference is that while the element that we are inserting has a value bigger than its parent's value, we switch those 2 elements and repeat the process. When the value of the element becomes smaller than the value of its parent the process is done.
+We follow the same process that we explained in "INSERT MINHEAP number". The method "insert" of maxheap is almost the same as the method "insert" of minheap.
+Their only difference is that while the element that we are inserting has a value bigger than its parent's value, we switch those 2 elements and repeat the process.
+When the value of the element becomes smaller than the value of its parent the process is done.
 
 -GETSIZE MAXHEAP
 
@@ -80,7 +93,7 @@ Same as GETSIZE MAXHEAP.
 
 Same as FINDMIN MINHEAP. The content of position 0 of the "value" array of the maxheap is the value of the root of the maxheap. Therefore, it is the maximum value of the heap.
 
--DELETEMΑΧ MΑΧHEAP
+-DELETE MAXHEAP
 
 deletemax of maxheap is the same as deletemin of minheap.
 sortdeleted of maxheap checks if the child with the biggest value has a value bigger than the parent's value (not smaller like sortdeleted of minheap). But other than this, it follows the same steps as sortdeleted of minheap.
@@ -115,8 +128,8 @@ The class of the AVL tree has 2 attributes:
 > root: pointer to an object with the type node. It points to the root of the tree.
 > size: integer that contains the size of the AVL tree.
 
-The class "avltree" has the default constructor that initializes the size of the tree to 0 and makes root point to NULL και την συνάρτηση build που λειτουγεί όπως λειτουργούν οι αντίστοιχες συναρτήσεις των κλάσεων minheap και maxheap.
-
+The class "avltree" has the default constructor that initializes the size of the tree to 0 and makes root point to NULL.
+It also has the method "build" that works in the same way that the "build" methods of the classes "minheap" and "maxheap" work.
 
 
 -INSERT AVLTREE number
@@ -136,30 +149,41 @@ Otherwise, we search for the parent of the element starting from the root.
 2) Execution of the necessary rotations so that the tree remains an AVL tree:
 For the execution of these rotations the method rotations is called. The parameter of the function is the pointer of the node we inserted.
 
-The method rotations gets as a parameter a pointer to a node of the tree. The method has a the boolean variable "balanced". balanced is true when we do the rotation. Η συνάρτηση ελέγχει αν χρειάζεται κάποια περιστροφή το δένδρο που ξεκινάει από τον κόμβο που δέχεται ή από κάποιον πρόγονό του και εκτελεί αυτήν την περιστροφή.
+The method rotations gets as a parameter a pointer to a node of the tree. The method has the boolean variable "balanced". balanced is true when we do the rotation.
+The method checks if a rotation is needed for the tree that has as a root the node it receives or any of its ancestors. If a rotation is needed, then it executes that rotation.
 
 Specifically, if the node is empty or the necessary rotation has been executed for the tree to be an avltree then it returns. Otherwise, it calculates the height of the 2 subtrees using the function foo (the content of the function foo is explained later on).
 
-If the height of the node's right subtree is bigger than the height of the node's left subtree and the difference is greater or equal to 2 then we do a simple left rotation or a double rotation RL.
-If the height of the node's right child's right subtree is bigger than the height of the node's right child's left subtree then a simple left rotation is executed.
+If the height of the node's right subtree is bigger than the height of the node's left subtree and the difference is greater than or equal to 2 then we do a simple left rotation or a double RL rotation.
+If the height of the node's right child's right subtree is greater than the height of the node's right child's left subtree then a simple left rotation is executed.
 Otherwise, we execute a double RL rotation.
 If one of the 2 rotations is executed then we assign the value true to "balanced".
 
-Αν το ύψος του αριστερού υποδένδρου του κόμβου είναι μεγαλύτερο από το ύψος του δεξιού υποδένδρου του κόμβου και η διαφορά τους είναι μεγαλύτερη ή ίση με 2 τότε χρειάζεται να γίνει απλή δεξιά περιστροφή ή διπλή περιστροφή LR.
-Αν το ύψος του αριστερού υποδένδρου του αριστερού παιδιού του κόμβου είναι μεγαλύτερο από το ύψος του δεξιού υποδένδρου του παιδού του κόμβου τότε γίνεται απλή δεξιά περιστροφή.
+If the height of the node's left subtree is bigger than the height of the node's right subtree and the difference is greater or equal to 2 then we do a simple right rotation or a double LR rotation.
+If the height of the node's left child's left subtree is greater than the height of the node's left child's right subtree then a simple right rotation is executed.
 Otherwise, we execute a double LR rotation.
 If one of the 2 rotations is executed then we assign the value true to "balanced".
 
-Συναρτήσεις που χρησιμοποιούνται στην παραπάνω διαδικασία και εξήγηση της λειτουργίας τους:
+Functions that are used in the process we described above:
 1)foo
 2)left
 3)right
 
+Explanation of what the functions do:
 1)foo
-Η foo είναι η αναδρομική συνάρτηση η οποία βρίσκει και επιστρέφει το υψος του υποδένδρου με ρίζα έναν κόμβο kombos. Η foo δέχεται ως παράμετρο τον δείκτη στον kombos και μία ακέραια μεταβλητή height. Η δεύτερη παράμετρος χρησιμοποιείται για τον αναδρομικό υπολογισμό του ζητούμενου ύψους. Ουσιαστικά όσο εκτελούνται αναδρομές η δεύτερη παράμετρος είναι η απόσταση του κόμβου στον οποίο βρισκόμαστε από τον κόμβο για τον οποίο καλέσαμε αρχικά την συνάρτηση. Τελικά αυτή η παράμετρος θα αποκτήσει ως τιμή το ύψος του υποδένδρου γι' αυτό και έχει το όνομα height.
+foo is a recursive function that finds and returns the height of the subtree that has "node" as its root.
+The parameters we pass to foo are
+1) the pointer to "node"
+2) an integer "height"
 
-Αν ο κόμβος στον οποίο δείχνει η 1η παράμετρος είναι κενός, τότε επιστρέφεται η 2η παράμετρος.
-Αλλιώς καλείται η foo 2 φορές. Την πρώτη φροά καλείται με 1η παράμετρο τον δείκτη στο δεξί παιδί του και 2η παράμετρο το height αυξημένο κατά 1. Την δεύτερη φροά καλείται με 1η παράμετρο τον δείκτη στο αριστερό παιδί του και 2η παράμετρο το αυξημένο height αυξημένο κατά 1. Οι τιμές που επιστρέφουν αυτές οι δύο κλήσεις της συνάρτησης συγκρίνονται και επιστρέφεται η μεγαλύτερη.
+The 2nd parameter is used for the recursive computation of the height. Basically, while recursions are executed the 2nd parameters the distance between the node we are currently examining and the node for whom we initially called "foo" for.
+Finally, this parameter is going to have the height of the subtree as value. This is why it's called "height".
+
+If the node that the 1st parameter is pointing to is empty, then the 2nd parameter is returned.
+Otherwise, foo is called 2 times.
+The 1st time it is called with the pointer to the right child as the 1st parameter and height+1 as the 2nd parameter.
+The 2nd time it is called with the pointer to the left child as the 1st parameter and height+1 as the 2nd parameter.
+The values that these 2 calls return are compared and the biggest value is returned.
 
 2)left
 left is a function that gets as a parameter the pointer to the node "node" and executes the simple left rotation of the subtree that has "node" as a root.
@@ -180,7 +204,9 @@ Same as the GETSIZE of previous structures.
 
 -FINDMIN AVLTREE
 
-In main, όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση FINDMIN AVLTREE τότε εκτός από τον χρόνο εκτέλεσης, εγγράφουμε και το ελάχιστο στοιχείο του δένδρου AVL στο output.txt και στη συνέχεια αλλάζουμε γραμμή. Βρίσκουμε το ελάχιστο στοιχείο του δένδρου AVL με τη συνάρτηση findmin της κλάσης avl.
+In main, when the phrase FINDMIN AVLTREE is detected in a line of "commands.txt" then we find the minimum element of the AVL tree by calling the "findmin" method of the avltree class.
+In output.txt we write both the execution time and the minimum element of the AVL tree.
+
 
 The AVL tree is a binary search tree so in order to find its smallest element we just need to find the most left element of the tree. 
 Therefore, we start at the root and we check if it has a left child. 
@@ -191,38 +217,52 @@ If it doesn't, then the value of the last node that we checked is the tree's min
 
 -SEARCH AVLTREE number
 
-Στη main, όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση SEARCH AVLTREE τότε αποθηκεύουμε τον αριθμό που ακολουθεί στην ακέραια μεταβλητή number όπως έχουμε περιγράψει και στην INSERT MINHEAP. Εκτός από τον χρόνο εκτέλεσης εγγράφουμε στο output.txt και αν υπάρχει το number στο δένδρο AVL και στη συνέχεια αλλάζουμε γραμμή. Συγκεκριμένα, εγγράφουμε "SUCCESS" αν υπάρχει στο δένδρο AVL και "FAILURE" αν δεν υπάρχει. Αυτό το βρίσκουμε με τη συνάρτηση search της κλάσης avltree.
+In main, when the phrase SEARCH AVLTREE is detected in a line of "commands.txt" then we save the integer that follows it in a variable called "number" in the same way that is described in "INSERT MINHEAP".
+In output.txt we write the execution time. We also write whether "number" exists in the AVL tree. Specifically, we write "SUCCESS" if it exists and "FAILURE" if it doesn't.
+We discover that using the method "search" of the avltree class.
 
-Η συνάρτηση search της κλάσης avltree δέχεται μία ακέραια μεταβλητή και επιστρέφει "SUCCESS" αν η τιμή της υπάρχει στο δένδρο AVL και "FAILURE" αν δεν υπάρχει.
+The method "search" of the class avltree gets an integer as a parameter and returns "SUCCESS" if the value of the integer is a value of an element of the AVL tree and "FAILURE" if it isn't.
 
-Στη συνάρτηση search:
-Το δένδρο AVL είναι δυαδικό δένδρο αναζήτησης άρα η αναζήτηση γίνεται ως εξής: 
-Η εξέτση των κόμβων του δένδρου αρχίζει από την ρίζα. 
-Αν η τιμή του κόμβου που εξετάζουμε είναι μεγαλύτερη από το number: αν ο κόμβος έχει αριστερό παιδί τότε εξετάζουμε το αριστερό παιδί, αλλιώς δεν υπάρχει κόμβος με τιμή number στο δένδρο άρα επιστρέφουμε "FAILURE".
-Αν η τιμή του κόμβου που εξετάζουμε είναι μικρότερη από το number: αν ο κόμβος έχει δεξί παιδί τότε εξετάζουμε το δεξί παιδί, αλλιώς δεν υπάρχει κόμβος με τιμή number στο δένδρο άρα επιστρέφουμε "FAILURE".
+In the method "search":
+The AVL tree is a binary search tree so the search happens in the following way:
+We start examining the tree's nodes from the root.
 
-Αν βρεθεί ο κόμβος επιστρέφουμε "SUCCESS".
+If the value of the node we are examining is bigger than "number":
+If the node has a left child then we examine the left child.
+Otherwise, there is no node with "number" as its value in the tree so we return "FAILURE".
+
+If the value of the node we are examining is smaller than "number":
+If the node has a right child then we examine the right child.
+Otherwise, there is no node with "number" as its value in the tree so we return "FAILURE".
+
+If we find the node, we return "SUCCESS".
 
 
 
 -DELETE AVLTREE number
 
-Στη main, όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση DELETE AVLTREE τότε αποθηκεύουμε τον αριθμό που ακολουθεί στην ακέραια μεταβλητή number όπως έχουμε περιγράψει και στην INSERT MINHEAP. Για την διαγραφή του κόμβου με τιμή number καλούμε την delete_node για το αντικείμενο avl με παράμετρο τo number.
+In main, when the phrase DELETE AVLTREE is detected in a line of "commands.txt" then we  save the integer that follows it in a variable called "number" in the same way that is described in "INSERT MINHEAP".
+In order to delete the node with the value "number", we call the method "delete_node" for the object avltree with "number" as the parameter.
 
-In the method delete_node εκτελούμε την διαδικασία της αναζήτησης όπως γίνεται και στη συνάρτηση search. We don't return the string "SUCCESS" when we find the node that has the value "number". Instead, we delete the node from the AVL tree. Also, instead of returning the string "FAILURE" when there isn't such node in the tree, we do nothing. Εφόσον δεν έχει γίνει επιστροφή στη main, στο δένδρο υπάρχει κόμβος με τιμή number άρα διαγράφουμε τον κόμβο από το δένδρο με μία if.
+In the method delete_node we execute the process of searching, the same way we did in the method "search".
+We don't return the string "SUCCESS" when we find the node that has the value "number". Instead, we delete the node from the AVL tree. Also, instead of returning the string "FAILURE" when there isn't such node in the tree, we do nothing.
+If we haven't returned to main, then in the tree there is a node that has the same value as "number" so we delete the node from the tree using an if structure.
     
-1ο βήμα: Διαγράφουμε τον κόμβο από το δένδρο έτσι ώστε αυτό να παραμείνει δένδρο δυαδικής αναζήτησης.
-2ο βήμα: Κάνουμε τις απαραίτητες περιστροφές έτσι ώστε το δένδρο να είναι δένδρο AVL.
+1st step: We delete the node from the tree so that the tree can remain a binary search tree.
+2nd step: We execute the necessary rotations so that the tree can remain an AVL tree.
 
-Στην αρχή έχουμε 2 μεταβλητές bool, την root και την right. Κάνουμε την root true αν ο κόμβος που βρήκαμε με την αναζήτηση είναι ρίζα. Κάνουμε το deji true αν ο κόμβος που βρήκαμε με την αναζήτηση είναι δεξί παιδί του γονιού του.
+Initially, we have 2 bool variables, "root" and "right".
+We make "root" true if the node we found while searching is the root.
+We make "right" true if the node we found while searching is the right child of its parent.
 
 If the node is a leaf:
 1st step:
 If the node is the root then we make the root point to NULL.
-Αλλιώς, αν ο κόμβος είναι δεξί παιδί του γονέα του, τότε το δεξί παιδί του γονέα γίνεται το NULL.
-Αλλιώς, αν ο κόμβος είναι αριστερό παιδί του γονέα του, τότε το αριστερό παιδί του γονέα γίνεται το NULL.
+Otherwise, if the node is its parent's right child, then the parent's right child becomes NULL.
+Otherwise, if the node is its parent's left child, then the parent's left child becomes NULL.
 2nd step:
-Καλείται η συνάρτηση rotations με παράμετρο τον δείκτη στον γονέα του κόμβου που διαγράφεται. Αυτό δεν χρειάζεται να γίνει σε περίπτωση που ο κόμβος είναι και φύλλο και ρίζα γιατί τότε δεν υπάρχουν άλλα στοιχεία.
+We call the function rotations. The parameter we pass is the pointer to the parent of the node we are deleting.
+This doesn't need to be done if the node is both a leaf and the root because then there are no other elements.
 
 If the node only has a right subtree:
 1st step:
@@ -232,19 +272,19 @@ Otherwise, the node is the left child of its parent. Then, the right child of th
 2nd step:
 The method "rotations" is called. The parameter it takes is the pointer to the right child of the node we are deleting.
 
-Αλλιώς, αν ο κόμβος έχει μόνο αριστερό υποδένδρο:
-1ο βήμα:
-Αν ο κόμβος είναι ρίζα τότε γίνεται ρίζα το αριστερό παιδί του κόμβου.
-Αλλιώς, αν ο κόμβος είναι δεξί παιδί του γονέα του, τότε το αριστερό παιδί του κόμβου γίνεται δεξί παιδί του γονέα του κόμβου.
-Αλλιώς, αν ο κόμβος είναι αριστερό παιδί του γονέα του, τότε το αριστερό παιδί του κόμβου γίνεται αριστερό παιδί του γονέα του κόμβου.
-2ο βήμα:
-Καλείται η συνάρτηση rotations με παράμετρο τον δείκτη στο αριστερό παιδί του κόμβου που διαγράφεται.
+Otherwise, if the node only has a left subtree:
+1st step:
+If the node is the root then the left child of the node becomes the root.
+Otherwise, if the node is the right child of its parent, then the left child of the node becomes the right child of the node's parent.
+Otherwise, the node is the left child of its parent. Then, the left child of the node becomes the left child of the node's parent.
+2nd step:
+The method "rotations" is called. The parameter it takes is the pointer to the left child of the node we are deleting.
 
-Αλλιώς, αν ο κόμβος έχει αριστερό και δεξί υποδένδρο:
+Otherwise, if the node has both a left and a right subtree:
 1st step:
 The node is replaced by the smallest element of its right subtree and the left child of the element's parent points to NULL. But if the right subtree only contains 1 element then the parent of the smallest element of the right subtree is the node itself. So, in this case the right child points to NULL, not the left one.
 2nd step:
-Καλείται η συνάρτηση rotations με παράμετρο τον δείκτη στο νέο μικρότερο στοιχείο του δεξιού υποδένδρου του κόμβου που διαγράφεται.
+The method "rotations" is called. The parameter it takes is the pointer to the new smallest element of the right subtree of the node we are deleting.
 
 Also, the size of the AVL tree is reduced by 1 when the deletion is done.
 
@@ -256,23 +296,24 @@ In order to explain how the graph works, we should first explain how the class "
 The class vertex has 6 attributes:
 > value: an integer that contains the value of the vertex.
 > edges: a dynamic array that contains all the vertices with whom the vertex is connected.
-> edges_count: an integer that contains the amount of προσπίπτουσων edges of the vertex.
-> weights: a dynamic array of integers that contains the weights of all the edges με τις οποίες είναι συνδεδεμένη η συγκεριμένη κορυφή. The arrays edges and weights are parallel arrays.
-> Τον δυναμικό πίνακα ακεραίων edges_positions στον οποίο αποθηκεύονται οι θέσεις όλων των κορυφών με τις οποίες συνδέεται η συγκεριμένη κορυφή στον πίνακα vertices. Ο πίνακας th_edges είναι παράλληλος με τους πίνακες edges και weights.
-> Την ακέραια μεταβλητή position_in_vertices στην οποία αποθηκεύεται η θέση της κορυφής στον πίνακα vertices.
+> edges_count: an integer that contains the amount of incident edges of the vertex.
+> weights: a dynamic array of integers that contains the weights of all its incident edges. The arrays edges and weights are parallel arrays.
+> edges_positions: a dynamic array of integers in which we save the positions in the array "vertices" of all the vertices with whom this vertex is connected. The array is parallel to the arrays "edges" and "weights".
+> position_in_vertices: an integer that contains the position of the vertex in the array "vertices".
 
 The methods of class "vertex" are:
 > A default constructor, that initializes the value of the vertex as 0 and its degree as 0.
 > A constructor that takes an integer as a parameter. The constructor makes the integer the value of the vertex and initializes its degree as 0.
 > A copy constructor.
 > The method "insert" that connects the vertex with a vertex that it gets as a parameter. The 2nd parameter is the weight of the edge that connects them. We make the assumption that the two edges are not already connected.
-> The method delete_edge που δέχεται ως παράμετρο μία κορυφή και διαγράφει από τον γράφο την ακμή που τη συνδέει με την κορυφή για την οποία εκτελείται η συνάρτηση.
+> The method delete_edge that gets a vertex as a parameter and deletes from the graph the edge that conets it to the vertex for which we called the method.
 > setters and getters.
-> Υπερφόρτωση του τελεστή = έτσι ώστε αυτός να λειτουργεί και για κορυφές.
+> Overload of the operator "=" so that it can also work for vertices.
 
-Αναλυτικότερα στην insert ενημερώνουμε τους πίνακες edges,weights,th_edges αυξάνοντας το μέγεθός τους κατά 1 και προσθέτοντας την νέα γειτονική κορυφή, το βάρος της νέας ακμής και την θέση της στον πίνακα edges σε αυτούς αντίστοιχα. Επίσης, αυξάνουμε την ακέραια μεταβλητή pl_edges.
+More specifically, in the method "insert" we update the arrays "edges","weights","edges_positions". We do so by increasing their size by 1 and by adding the new neighboring vertex, the weight of the new edge and its position in the arrays "edges","weights" and "edges_positions". Also, we increase edges_count by 1.
 
-Η delete_edge αρχικά ελέγχει αν η ακμή που συνδέει την κορυφή με την κορυφή που δέχεται ως 1η παράμετρο υπάρχει στον γράφο και αν βρει ότι η ακμή υπάρχει αποθηκεύει την θέση που έχει στους πίνακες edges/weights/th_edges (είναι η ίδια γιατί οι πίνακες είναι παράλληλοι) στην μεταβλητή position. Αν η ακμή δεν υπάρχει εκτελείται η return, αλλιώς ενημερώνουμε τους πίνακες edges,weights,th_edges αφαιρώντας από αυτούς το στοιχείο στην θέση "position" και μειώνοντας το μέγεθός τους κατά 1.
+Initially, delete_edge checks if the edge that connects the vertices exists in the graph and if it discovers that the edge exists, then it saves its position in the arrays edges/weights/edges_position in the variable "position". The arrays are parallel so the position is the same in each array.
+If the edge doesn't exist, then we return. Otherwise, we update the arrays edges,weights,edges_positions by removing the element in "position" from them and by reducing their size by 1.
 
 
 •graph
@@ -281,7 +322,7 @@ The methods of class "vertex" are:
 
 -BUILD GRAPH filename
 
-Για τον γράφο στην main ακολουθούνται τα ίδια βήματα που ακολουθούνται και στις BUILD των προηγούμενων δομών.
+For the "BUILD" command pf graph we follow the same steps in main that we followed for the "BUILD" commands of previous structures.
 
 The class "graph" has 3 attributes:
 > vertices: dynamic array that contains the vertices of the graph
@@ -295,113 +336,157 @@ It also has the method "build" that gets the name of a file as a parameter and r
 
 -INSERT GRAPH number1 number2 weight
 
-In main, when a line of αρχείου commands.txt εντοπιστεί η φράση INSERT GRAPH τότε οι 3 συμβολοσειρές που ακολουθούν  μετατρέπονται σε ακέραιους και καλείται η insert για το αντικείμενο gr που είναι ο γράφος μας με παραμέτρους τις 3 αυτές τιμές n1,n2 και w.
+In main, when the phrase INSERT GRAPH is detected in a line of "commands.txt" then the 3 strings that follow it are turned into integers and the method insert is called for the graph object. The parameters we pass on it are the 3 integers.
 
-Με την συνάρτηση insert εισάγουμε στον γράφο τις κορυφές με τιμή n1 και n2 αν αυτές δεν υπάρχουν ήδη. Επίσης εισάγουμε στον γράφο την ακμή με τερματικά σημεία τις κορυφές με τιμές n1 και n2 και βάρος w. Αρχικά αναζητούμε τις 2 κορυφές στον γράφο. Αν κάποια από αυτές δεν υπάρχει τότε την εισάγουμε στον γράφο προσθέτοντάς την στον πίνακα "vertices" και αυξάνουμε κατάλληλα την τάξη του γράφου. Αν και οι δύο κορυφές υπάρχουν ήδη στον γράφο, τότε απλά εισάγουμε την ακμή που τις συνδέει. Η εισαγωγή της ακμής γίνεται ως εξής: για τις κορυφές n1 και n2 καλούμε την insert της κλάσης τους με παράμετρο την άλλη κορυφή και το βάρος της ακμής που θέλουμε να εισάγουμε και τη θέση της άλλης κορυφής στον πίνακα "vertices" και αυξάνουμε το μέγεθος του γράφου κατά 1.
+With the method "insert", we insert in the graph the vertices with values "n1" and "n2" if they don't already exist in the graph.
+Also, we insert the edge that connects them with "w" as its weight.
+Initially, we look for the 2 vertices in the graph.
+If 1 of them doesn't exist then we insert it in the graph by adding it in the array "vertices" and increasing the order of the graph.
+If both vertices already exist in the graph, then we just insert the edge that connects them.
+
+The insertion of the edge happens this way:
+- We call "insert" for both vertices n1 and n2. The parameter we pass is the other vertex, the weight of the edge and the position of the other vertex in the array "vertices".
+- We increase the graph's size by 1.
 
 
 
 -GETSIZE GRAPH
 
-Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση GETSIZE GRAPH τότε εγγράφουμε στο αρχείο output.txt το μέγεθος και την τάξη του γράφου, τα οποία παίρνουμε με τις συνάρτησεις getsize και getorder και στη συνέχεια αλλάζουμε γραμμή. Η getsize επιστρέφει το μέγεθος και η getorder επιστρέφει την τάξη του γράφου.
+In main, when the phrase "GETSIZE GRAPH" is detected in a line of "commands.txt" then we write the size and order of the graph in the file "output.txt". We get the size from the method "getsize" and we get the size from the method "getorder".
 
 -DELETE GRAPH number1 number2
 
-Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση DELETE GRAPH number1 number2 τότε μετατρέπουμε τις δύο συμβολοσειρές που ακολουθούν την φράση DELETE GRAPH σε ακέραιες και τις αποθηκεύουμε στις ακέραιες μεταβλητές n1 και n2. Για να διαγράψουμε την ακμή από τον γράφο καλούμε την delete_graph_edge για το αντικείμενο gr, που είναι ο γράφος μας, με παραμέτρους τα n1 και n2.
+In main, when the phrase DELETE GRAPH number1 number2 is detected in a line of "commands.txt" then we turn the 2 strings that follow "DELETE GRAPH" to integers and save them in the integer variables "n1" and "n2".
+In order to delete the edge from the graph we call the method "delete_graph_edge" for the object graph, which is our graph. The parameters we pass are the variables n1 and n2.
 
-Στην delete_graph_edge αναζητούμε τις 2 κορυφές για να βρούμε αν υπάρχουν στον γράφο. Αν και οι δύο υπάρχουν τότε καλούμε την delete_edge της vertex για την 1η κορυφή με παράμετρο την 2η κορυφή και για την 2η κορυφή με παράμετρο την 1η κορυφή. Επίσης, μειώνουμε το μέγεθος του γράφου κατά ένα.
-
+In delete_graph_edge we search for the 2 vertices to see whether they exist in the graph or not. If they both exist then we call the method delete_edge of vertex for each vertex with the other one as a parameter. We also reduce the size of the graph by 1.
 
 
 -COMPUTESHORTESTPATH GRAPH number1 number2
 
-Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση COMPUTESHORTESTPATH GRAPH number1 number2 τότε μετατρέπουμε τις δύο συμβολοσειρές που ακολουθούν την φράση COMPUTESHORTESTPATH GRAPH σε ακέραιες και τις αποθηκεύουμε στις ακέραιες μεταβλητές n1 και n2. Έπειτα καλείται η συνάρτηση Dijkstra για τον γράφο με παραμέτρους τις τιμές n1,n2 και το αποτέλεσμά της εγγράφεται στο αρχείο output.txt.
+In main, when the phrase COMPUTESHORTESTPATH GRAPH number1 number2 is detected in a line of "commands.txt" then turn the 2 strings that follow "COMPUTESHORTESTPATH GRAPH" to integers. We save them in the integer variables "n1" and "n2".
+After this, the method "Dijkstra" is called for the graph. The parameters it uses are "n1","n2" and the result it returns is written in the file "output.txt".
 
-Στη συνάρτηση Dijkstra χρησιμοποιείται μία επιπλέον κλάση η οποία μοιάζει με την κλάση του σωρού ελαχίστων. Η κλάση αυτή ονομάζεται minheap_gr. Η κλάση αυτή λειτουργεί σαν τον σωρό ελαχίστων που έχουμε ήδη εξηγήσει. Οι διαφορές τους αναφέρονται παρακάτω. Αρχικά, η minheap_gr αντί να δέχεται ως τιμές των κόμβων ακέραιους αριθμούς, δέχεται κόμβους του γράφου τους οποίους αποθηκεύει σε έναν δυναμικό πίνακα v. Επίσης, έχει έναν ακέραιο δυναμικό πίνακα keys. Οι τιμές του σωρού διατάσσονται με βάση τις τιμές του πίνακα keys. Επίσης έχει έναν δυναμικό πίνακα th_ston_k στον οποίο αποθηκεύονται οι θέσεις των κορυφών του πίνακα v στον πίνακα "vertices". Οι 3 δυναμικοί πίνακες είναι παράλληλοι.
+In the function Dijkstra we also use an extra class that is very similar to the minheap class. This class is called minheap_graph. I report the differences between minheap and minheap_graph below.
 
-Η κλάση minheap_gr έχει την συνάρτηση decreasekey, η οποία εντοπίζει την κορυφή που δέχεται ως πρώτη παράμετρο στον σωρό, και σε εκείνο το στοιχείο του σωρού αποθηκεύει στο keys την 2η παράμετρο. Στη συνέχεια η συνάρτηση φροντίζει έτσι ώστε ο σωρός να παραμείνει σωρός ελαχιστων με την κλήση των συναρτήσεων sortdeleted και sort.
+Initially, minheap_graph receives the nodes of the graph instead of the integers that are the vertex's values. It saves them in the dynamic array "v". Also, it has the dynamic array of integers "keys". The values of the heap are sorted based on the values of the "keys" array.
+Also, it has the dynamic array "position_in_vertices" which contains the positions of the vertices of the array "v" in the array "vertices". The 3 dynamic arrays are parallel.
 
-Η κλάση minheap_gr έχει και την αναδρομική συνάρτηση sort η οποία δέχεται ως παράμετρο μία ακέραια μεταβλητή th. Η sort φροντίζει έτσι ώστε κάθε φορά ο γονέας του στοιχείου της θέσης th στον σωρό να έχει μικρότερή τιμή keys από την τιμή keys του παιδιού. Αν αυτό δεν ισχύει τότε τα αντιμεταθέτει και επαναλαμβάνει τον έλεγχο για το στοιχείο που είναι πλέον γονέας. Αλλιώς επιστρέφει.
+The class minheap_graph has the method decreasekey, which takes the vertex that it receives as the 1st parameter and it tracks its position in the heap.
+It stores the 2nd parameter in the array keys. The position it is stored in is the position that it found.
+After this, the method makes sure that the heap continues to be a minheap. It does so by calling the methods sortdeleted and sort.
 
-Η συνάρτηση Dijkstra δέχεται δύο ακέραιες μεταβλητές n1,n2 ως παραμέτρους. Η συνάρτηση υπολογίζει και επιστρέφει το κόστος της ελάχιστης διαδρομής από τον κόμβο με τιμή n1 μέχρι τον κόμβο με τιμή n2. Η συνάρτηση Dijkstra έχει τον ακέραιο πίνακα d στον οποίο αποθηκεύει τις αποστάσεις όλων των κόμβων του γράφου από τον κόμβο με τιμή n1.
+The class minheap_graph also has the recursive function "sort" that gets as a parameter the integer "position".
+sort makes sure that the parent of the element in position "position" in the heap has a smaller value "keys" than the value "keys" of its child. If this isn't true then it swaps them and repeats the check for the element that is now the parent. Otherwise, it returns.
 
-Στην συνάρτηση κάθε κόμβος του γράφου εισάγεται στον σωρό ελαχίστων με 2η παράμετρο του το στοιχείο d που αντιστοιχεί σε αυτόν και 3η παράμετρο την θέση του στον πίνακα "vertices". Ο Dijkstra λειτουργεί ως εξής: κάθε φορά διαγράφεται η ρίζα από τον σωρό και ενημερώνεται ο πίνακας d αν με το στοιχείο που διαγράφηκε από τον σωρό μειώνεται κάποια από τις αποστάσεις του κόμβου με τιμή n1 προς κάποιον γειτονικό κόμβο του στοιχείου αυτού που διαγράφεται από τον σωρό
+The function Dijkstra receives 2 integers "n1", "n2" as parameters.
+The function calculates and returns the cost of the minimum path between the node with value n1 and the node with value n2.
+Tha function has an integer array "d" in which it saves the distances of each vertex of the graph to the vertex with the value n1.
+
+In the function, every vertice of the graph is inserted in the minheap.
+The parameters we pass on the insert function are the vertex, the vertex's element in d and the position the vertex has in the array "vertices".
+Dijkstra does the following: each time the root is deleted from the heap and the matrix d is updated it checks if by deleting the element from the heap, any of the distances of the "n1" node to its neighbor is deleted from the heap.
 
 -FINDCONNECTEDCOMPONENTS GRAPH
 
 In main, when the phrase FINDCONNECTEDCOMPONENTS GRAPH is detected in a line of "commands.txt" then the method fcc of the graph is called and the value it returns is written in the file "output.txt".
 
-In the method fcc there is the array "color" in which the color of each κορυφή is saved. If we haven't visited the κορυφή yet, the color is 'w'. While we are visiting it th color is 'g'. After we have visited it the color is 'b'. Initially, the color of each κορυφών is 'w'. Για κάθε κορυφή, αν δεν την έχουμε επισκεπτεί, αυξάνουμε το πλήθος των συνεκτικών συνιστωσών κατά 1 και επισκεπτόμαστε αυτή την κορυφή και κάθε κορυφή της συνεκτικής συνιστώσας στην οποία ανήκει. Αυτό γίνεται με τη συνάρτηση DFSVisit.
+In the method fcc there is the array "color" in which the color of each vertex is saved. If we haven't visited the vertex yet, the color is 'w'. While we are visiting it th color is 'g'. After we have visited it the color is 'b'. Initially, the color of each vertex is 'w'.
+For each vertex that we haven't visited, we increase the count of connected components by 1and we visit the vertex and every vertex of the connected component it belongs in. This happens with the method DFSVisit.
 
-Η αναδρομική συνάρτηση DFSVisit δέχεται ως παράμετρο τον πίνακα color και μία ακέραια μεταβλητή u και προσπελάυνει τα στοιχεία της συνιστώσας που περιέχει την κορυφή που βρίσκεται στην θέση u στον πίνακα "vertices". Η συνάρτηση ενημερώνει και τον πίνακα color.
+The recursive function DFSVisit receives as a parameter the array "color" and the integer "u" and it traverses the elements of the component that contains the vertex tha is in the position "u" of the array "vertices". The function updates the array "color".
 
 
 
 -COMPUTESPANNINGTREE GRAPH
 
-Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση COMPUTESPANNINGTREE GRAPH τότε καλείται η συνάρτηση cc2 για τον γράφο και το αποτέλεσμά της, που είναι το κόστος του ελάχιστου εκτεινόμενου δένδρου του γράφου, εγγράφεται στο αρχείο output.txt.
+In main, when the phrase COMPUTESPANNINGTREE GRAPH is detected in a line of "commands.txt" then the method cc2 is called for the graph and its result is written in the file "output.txt".
+The result it returns is the cost of the graph's minimum spanning tree.
 
-The method cc2 helps in the execution of the Prim algorithm for each συνιστώσα of the graph. Η συνάρτηση έχει έναν πίνακα color2 στον οποίο έχει αποθηκευμένο το χρώμα κάθε κορυφής. Αν δεν έχουμε επισκεπτεί την κορυφή τότε το χρώμα της είναι 'w'.
-Όσο την επισκεπτόμαστε το χρώμα της είναι 'g'. Αφού την επισκεπτούμε το χρώμα της είναι 'b'. Για κάθε κορυφή του γράφου αν δεν την έχουμε επισκεπτεί τότε έχουμε έναν πίνακα color3, τον οποίο αρχικοποιούμε με 'w', και καλούμε τη συνάρτηση DFSVisit2 με παραμέτρους τον color2, την θέση της κορυφής στον πίνακα "vertices" και τον color3. Η DFSVisit2 λειτουργεί σαν την DFSVisit μόνο που ενημερώνει και τον πίνακα color3. Άρα, ο color3 μετά την εκτέλεση της DFSVisit2 περιέχει την τιμή 'b' μόνο για τις κορυφές της συνεκτικής συνιστώσας στην οποία ανήκει η κορυφή της θέσης i του πίνακα "vertices".
+The method cc2 helps in the execution of the Prim algorithm for each connected component of the graph.
+The method has the array color2 which contains the color of each vertex.
+- If we haven't visited the vertex, then its color is 'w'.
+- While we are visiting it, its color is 'g'.
+- After we have visited it, its color is 'b'.
 
-cc2 returns the cost of the minimum spanning tree that it computes with the variable "result". Η result αρχικοποιείται με 0 και μετά από κάθε εκτέλεση του DFSVisit2 ενημερώνεται. Κάθε φορά η result αυξάνεται κατά την τιμή που επιστρέφει η συνάρτηση Prim με παραμέτρους τον πίνακα color3 και την θέση i.
+For each vertex we haven't visited we have the array color3. We initialize the array with 'w', and we call the method DFSVisit2. The parameters we pass are color2, the vertex's position in "vertices" and color3.
+DFSVisit2 works like DFSVisit but in addition to this, it updates the array color3. Therefore, after the execution of DFSVisit, color3 contains the value 'b' only for the vertices of the connected component that contains the i-th vertex of the array "vertices".
 
-The method Prim has 2 arrays: "color" and "key". Αρχικά, οι πίνακες αρχικοποιούνται, ο color με 'w' και ο key με τον μεγαλύτερο δυνατό ακέραιο (INT_MAX). Έχουμε έναν σωρό ελαχίστων τύπου minheap_gr στον οποίο εισάγουμε κάθε κόμβο του γράφου με το αντίστοιχο key και τη θέση του στον πίνακα "vertices".
+cc2 returns the cost of the minimum spanning tree that it computes with the variable "result".
+Initially, result has the value 0 and after every execution of the method DFSVisit2 it is updated.
+Every time result is increased by the value returned by the method Prim. The parameters we pass to Prin are the array color3 and the integer i that indicates the position.
 
-Όσο ο σωρός έχει στοιχεία διαγράφουμε τη ρίζα του και την αποθηκεύουμε στην κορυφή u. Για κάθε γειτονική κορυφή της u αν δεν την έχουμε επισκεπτεί και μπορούμε να μειώσουμε το key του u μέσω αυτής τότε ενημερώνουμε το key και τον σωρό.
+The method Prim has 2 arrays: "color" and "key". We initialize color with 'w' and key with the biggest possible integer (INT_MAX). We have a minheap of the class minheap_graph in which we insert every vertex of the graph with its key and its position in the array "vertices".
 
+While the heap has elements we delete the root and store it in the vertex "u". For each neighboring vertex of "u" if we haven't visited and we can decrease the key of "u" through it then we update the "key" and the heap.
 
-Η συνάρτηση έχει μία long int μεταβλητή weight που είναι το βάρος του ελάχιστου εκτεινόμενου δένδρου της συνεκτικής συνιστώσας που περιέχει τα στοιχεία τα οποία έχουν color3 'b'. Το weight θα γίνει το άθροισμα των key τα οποία έχουν color3 'b'. Η συνάρτηση επιστρέφει το weight.
+The method has the long int variable "weight" which contains the weight of the minimum spanning tree of the connected component that contains the elements that have color3 'b'. The weight will become the sum of the keys that have color3 'b'. The method returns the weight.
 
 
 
 •hashtable
 
 
-Έστω οτι η συνάρτηση h(n)=(3*n+7) mod maxsize είναι η συνάρτηση κατακερματισμού μας.
+The hash function we use is h(n)=(3*n+7) mod maxsize.
 
 -BUILD HASHTABLE filename
 
-Για τον πίνακα κατακερματισμού στην main ακολουθούνται τα ίδια βήματα που ακολουθούνται και στις BUILD των προηγούμενων δομών. 
+For the hashtable main we follow the same steps that we followed in the "BUILD" of the previous structures.
 
-Η κλάση hashtable έχει 2 μεταβλητές:
-> Τον δυναμικό πίνακα ακεραίων data ο οποίος είναι ο πίνακας κατακερματισμού μας
-> Την ακέραια μεταβλητή maxsize, η οποία είναι το μέγεθος του πίνακα data
+The class hashtable has 2 attributes:
+> data: dynamic array of integers that is the hashtable
+> maxsize: integer that is data's size
 
-Η κλάση hashtable έχει τον default κατασκευαστή που αρχικοποιεί το maxsize με 50 και κάνει το data πίνακα με 50 θέσεις.
+The class hashtable has the default constructor that initializes "maxsize" as 50 and makes "data" an array with size 50.
 
-Η κλάση hashtable έχει επίσης μία συνάρτηση build που δέχεται ως παράμετρο το όνομα του αρχείου από το οποίο διαβάζει τα δεδομένα για την κατασκευή του πίνακα κατακερματισμού και τα εισάγει στον πίνακα κατακερματισμού. Αυτό γίνεται με την κλήση της insert για κάθε τιμή που διαβάζεται από το αρχείο. Η τιμή αυτή γίνεται παράμετρος της insert.
+The class also has the function "build" that receives as a parameter the name of the file that it reads the data from in order to construct the hashtable.
+The method inserts the elements in the hashtable. This happens with the call of the method "insert" for each value that is read from the file. This value becomes a parameter to "insert".
 
 
 
 -INSERT HASHTABLE number
 
-Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση INSERT HASHTABLE τότε η συμβολοσειρά που ακολουθεί μετατρέπεται σε ακέραιο όπως έγινε και στις INSERT των προηγούμενων δομών και καλείται η insert για το αντικείμενο ht με παράμετρο τον ακέραιο.
+In main, when the phrase INSERT GRAPH is detected in a line of "commands.txt" then the string that follows it is turned into an integer in the way we have described in the INSERT of previous structures.
+After this, the method insert is called for the hashtable object. The parameter we pass on it is the integer.
 
-Με την συνάρητση insert εισάγουμε στον πίνακα κατακερματισμού το στοιχείο με τιμή n. Αν ο πίνακας έχει γεμίσει τότε διπλασιάζουμε το μέγεθος του πίνακα. Άρα η συνάρτηση κατακερματισμού αλλάζει. Άρα ξαναεισάγουμε τα στοιχεία στον πίνακα κατακερματισμού χρησιμοποιώντας την νέα συνάρτηση κατακερματισμού. Αυτό γίνεται με έναν βοηθητικό πίνακα data2.
-Η εισαγωγή κάθε στοιχείου στον πίνακα κατακερματισμού γίνεται ως εξής: υπολογίζουμε την θέση th του στοιχείου στον πίνακα κατακερματισμού. Αν δεν έχει τοποθετηθεί αριθμός στην θέση position του πίνακα (δηλαδή αν ο πίνακας σε εκείνη την θέση έχει το -1) τότε τοποθετούμε σε εκείνη τη θέση το στοιχείο. Αν έχει τοποθετηθεί άλλο στοιχείο σε εκείνη τη θέση τότε γίνεται αναζήτηση για την επόμενη θέση στην οποία δεν έχει τοποθετηθεί κάποιο στοιχείο.
-Αν κατά την αναζήτηση αυτή φτάσουμε στο τέλος του πίνακα τότε συνεχίζουμε από την αρχή του. Όταν βρούμε την θέση του στοιχείου τότε τοποθετούμε σε αυτή το στοιχείο.
+With the method "insert" we insert the element with the value n in the hashtable. If the hashtable is full then we double its size. That means that the hash function changes.
+Therefore, we re-insert the elements in the hashtable using the new hash function. This is done with the help of the array data2.
+The insertion of each element in the hashtable is done this way: we calculate the position of the element in the hashtable.
+- If the position in empty (that is to say the array contains -1 in this position) then we put the element in that position.
+- If another element is placed on that position then we search for the next empty position.
+- If while searching we reach the end of the array then we continue from the beginning.
+- When we reach the empty position we place the element.
 
 
 
 -GETSIZE HASHTABLE
 
-Στη main όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση GETSIZE HASHTABLE τότε εγγράφουμε στο αρχείο output.txt το μέγεθος του hashtable, το οποίο παίρνουμε με τη συνάρτηση getsize και στη συνέχεια αλλάζουμε γραμμή. Η συνάρτηση getsize υπολογίζει και επιστρέφει το πλήθος των στοιχείων του πίνακα κατακερματισμού. Συγκεκριμένα, η συνάρτηση έχει μία μετβαλητή pl_st που συμβολίζει το πλήθος των στοιχείων του πίνακα κατακερματισμού. Η pl_st αρχικοποιείται με 0. Για κάθε στοιχείο του πίνακα data αν το στοιχείο είναι διάφορο του -1 τότε το pl_st αυξάνεται κατά 1. Τέλος, επιστρέφεται το pl_st.
+In main, when the phrase GETSIZE HASHTABLE is detected in a line of "commands.txt" then we write in the file "output.txt" the size of the hashtable. We get the size with the method "getsize".
+The method "getsize" calculates and returns the amount of elements that there are in the hashtable.
+More specifically, the method has the variable "elements_count" which contains the count of elements there are in the hashtable.
+We initialize elements_count to 0. For each element in "data", if the element is not -1 then we increase elements_count by 1. Finally, we return elements_count.
 
 
 
 -SEARCH HASHTABLE number
 
-Στη main, όταν σε κάποια γραμμή του αρχείου commands.txt εντοπιστεί η φράση SEARCH HASHTABLE τότε αποθηκεύουμε τον αριθμό που ακολουθεί στην ακέραια μεταβλητή number όπως έχουμε περιγράψει και στην INSERT MINHEAP. Εκτός από τον χρόνο εκτέλεσης εγγράφουμε στο output.txt και αν υπάρχει το number στο hashtable και στη συνέχεια αλλάζουμε γραμμή. Συγκεκριμένα, εγγράφουμε "SUCCESS" αν υπάρχει και "FAILURE" αν δεν υπάρχει. Αυτό το βρίσκουμε με τη συνάρτηση search της κλάσης hashtable.
+In main, when the phrase SEARCH HASHTABLE is detected in a line of "commands.txt" then we turn the string that follows it into an integer and save it in the variable "number" as we have described in "INSERT MINHEAP".
+In the file "output.txt" we write the execution time and whether "number" exists in the hashtable or not. More specifically, we write "SUCCESS" if it exists and "FAILURE" if it doesn't. We find this using the method "search" of the class hashtable.
 
-Η συνάρτηση search έχει ως παράμετρο μία ακέραιη μεταβλητή n. Η search αναζητάει το στοιχείο με τιμή n στον πίνακα κατακερματισμού και αν το βρει επιστρέφει το string "SUCCESS". Αλλιώς επιστρέφει το string "FAILURE".
+The method "search" has as a parameter the integer "n". The method searches for the element with the value "n" in the hashtable.
+If it finds it then it returns the string "SUCCESS".
+Otherwise, it returns the string "FAILURE".
 
-Σύμφωνα με την συνάρτηση κατακερματισμού που έχουμε επιλέξει, η θέση στην οποία θα έπρεπε να είναι το στοιχείο που αναζητάμε στον πίνακα κατακερματισμού είναι (3*n+7) mod maxsize.
+According to the hash function we have chosen, the element that we are searching for should be in the position (3*n+7) mod maxsize of the hashtable.
 
-> Αν η θέση στην οποία θα έπρεπε να είναι το n εχει το -1 (δηλαδή είναι κενή) τότε το στοιχείο που αναζητάμε δεν υπάρχει στον πίνακα κατακερματισμού άρα επιστρέφεται "FAILURE".
-> Αν η θέση στην οποία θα έπρεπε να είναι το n δεν είναι κενή και δεν έχει γίνει σύγκρουση (δηλαδή περιέχει το στοιχείο που αναζητάμε) τότε επιστρέφει "SUCCESS".
-> Αν η θέση στην οποία θα έπρεπε να είναι το n δεν είναι κενή και έχει γίνει σύγκρουση (δηλαδή δεν περιέχει το στοιχείο που αναζητάμε) τότε ακολουοθύμε τα εξής βήματα:
-  -Αρχίζουμε από την θέση μετά από την θέση στην οποία θα έπρεπε να είναι το στοιχείο και ελέγχουμε με τη σειρά όλα τα επόμενα στοιχεία του πίνακα κατακερματισμού. Αν βρούμε το στοιχείο τότε επιστρέφουμε "SUCCESS". Αν βρούμε κενή θέση τότε επιστρέφουμε "FAILURE". Αν ο έλεγχος φτάσει στο τέλος του πίνακα τότε συνέχιζουμε τον έλεγχο από την αρχή του πίνακα. Αν έχουμε ελέγξει όλα τα στοιχεία και δεν έχουμε βρει το n τότε επιστρέφουμε "FAILURE".
+> If the position in which "n" should be contains -1 (that is to say it is empty) then the element we are looking for does not exist in the hashtable. Therefore, we return "FAILURE".
+> If the position in which "n" should be is not empty and there hasn't been a collision (that is to say the position contains the elemnent we are looking for), then we return "SUCCESS".
+> If the position in which "n" should be is not empty and there has been a collision (that is to say the position doesn't contain the elemnent we are looking for) then we follow these steps:
+  - Starting from the position after the position the element should be in we check one by one the next elements of the hashtable.
+    - If we find the elemnt, then we return "SUCCESS".
+    - If we find an empty position, then we return "FAILURE".
+    - If we reach the end of the hashtable, then we continue searching from the start of the array.
+    - If we have checked all the elements and we haven't found "n", then we return "FAILURE".
 
 
 
