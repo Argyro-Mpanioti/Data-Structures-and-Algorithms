@@ -1,6 +1,19 @@
-## - **main.cpp**
+# Data Structures and Algorithms
+
+##### This is a program that contains the implementation of the following data structures:
+- ##### Minheap
+- ##### Maxheap
+- ##### AVL tree
+- ##### Graph 
+- ##### Hashtable
+
+##### and algorithms that are applied to these structures.
+
+---
+## - **main**
 
 In main.cpp the file commands.txt is read and the commands written in it are executed. Specifically, each line of commands.txt is read and saved in the string *line* until the command that the line contains is executed. When the command gets executed, the process is repeated for the rest of the lines of until there are no other commands in commands.txt.
+
 The content of line is saved in the character array *com*. This is done to allow the use of the function *strstr* later on. After this, there is an if...else if structure that checks which command is in com. According to the command the appropriate actions are executed. The execution time is counted and written in the "output.txt" file.
 
 
